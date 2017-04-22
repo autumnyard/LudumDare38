@@ -7,12 +7,12 @@ public class EntityPlayer : EntityBase
     public delegate void OnExitDelegate();
     public OnExitDelegate OnExit;
 
+    private float dashTime = 0.5f;
+    private float dashAgainTime = 0.5f;
+
     [SerializeField, Range(4f, 20f)] private float speed = 7f;
     [SerializeField, Range(0.1f, 6f)] private float dash = 4f;
     [SerializeField, Range(1f, 20f)] private float drag = 3f;
-
-
-
 
     public void MoveUp()
     {
@@ -31,8 +31,15 @@ public class EntityPlayer : EntityBase
         rigidbody.AddForce(Vector2.right * speed, ForceMode2D.Force);
     }
 
+    Coroutine dashTimerCoroutine;
     public void Dash()
     {
+        if (canDash == false) { return; }
+
+        canDash = false;
+        ChangeState(States.Dashing);
+        dashTimerCoroutine = StartCoroutine(DashTimer());
+
         Vector2 direction = Vector2.zero;
 
         switch (id)
@@ -111,7 +118,23 @@ public class EntityPlayer : EntityBase
                 OnExit();
             }
             */
+            if (dashTimerCoroutine != null)
+            {
+                StopCoroutine(dashTimerCoroutine);
+            }
             Hurt(1);
         }
+    }
+
+    IEnumerator DashTimer()
+    {
+        yield return new WaitForSeconds(dashTime);
+        if(currentState == States.Dashing) 
+        {
+            ChangeState(States.Normal);
+        }
+
+        yield return new WaitForSeconds(dashAgainTime);
+        canDash = true;
     }
 }

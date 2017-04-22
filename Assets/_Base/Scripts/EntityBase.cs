@@ -7,6 +7,7 @@ public class EntityBase : MonoBehaviour
     public delegate void OnDieDelegate();
     public OnDieDelegate OnDie;
 
+    protected bool canDash = true;
 
     #region Variables
     protected enum States
@@ -17,7 +18,8 @@ public class EntityBase : MonoBehaviour
         Hurting,
         Dying,
         Dead,
-        MaxValues
+        MaxValues,
+        Dashing
     }
     protected States currentState { private set; get; }
 
@@ -196,6 +198,8 @@ public class EntityBase : MonoBehaviour
     {
         ChangeState(States.Appearing);
         transform.localPosition = Vector2.zero;
+        rigidbody.velocity = Vector2.zero;
+        canDash = true;
     }
     #endregion
 

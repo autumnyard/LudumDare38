@@ -13,6 +13,8 @@ public class ManagerUI : MonoBehaviour
     public PanelBase panelLoading;
     //[SerializeField]
     public PanelScore panelScore;
+    //[SerializeField]
+    public PanelBase panelPause;
 
     // Panel HUD
     [Header("Ingame HUD"), SerializeField] private UnityEngine.UI.Text health1;
@@ -44,12 +46,15 @@ public class ManagerUI : MonoBehaviour
                 panelHUD.Hide();
                 panelLoading.Hide();
                 panelScore.Hide();
+                panelPause.Hide();
                 break;
+
             case Structs.GameScene.Ingame:
                 panelMenu.Hide();
                 panelHUD.Show();
                 panelLoading.Hide();
                 panelScore.Hide();
+                panelPause.Hide();
                 break;
 
             case Structs.GameScene.Score:
@@ -57,6 +62,7 @@ public class ManagerUI : MonoBehaviour
                 panelHUD.Hide();
                 panelLoading.Hide();
                 panelScore.Show();
+                panelPause.Hide();
                 break;
 
             case Structs.GameScene.LoadingGame:
@@ -64,6 +70,7 @@ public class ManagerUI : MonoBehaviour
                 panelHUD.Hide();
                 panelLoading.Show();
                 panelScore.Hide();
+                panelPause.Hide();
                 break;
 
             default:
@@ -71,6 +78,7 @@ public class ManagerUI : MonoBehaviour
                 panelHUD.Hide();
                 panelLoading.Hide();
                 panelScore.Hide();
+                panelPause.Hide();
                 break;
         }
     }

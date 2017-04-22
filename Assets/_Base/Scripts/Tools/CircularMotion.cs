@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class CircularMotion : MonoBehaviour {
 
-    private float speed = 5f;
-    private float radius = 0.1f;
+    [SerializeField] private float speed = 0.3f;
+    [SerializeField] private float radius = 5f;
     private Vector2 center;
 
     private float _angle;
@@ -14,8 +14,8 @@ public class CircularMotion : MonoBehaviour {
     {
         // _centre = transform.position;
         center = Vector2.zero;
-        radius = 5f;
-        speed = 0.7f;
+        //radius = 5f;
+        //speed = 0.4f;
     }
 
     private void Update()

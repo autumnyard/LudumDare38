@@ -24,6 +24,7 @@ public class ManagerInput : MonoBehaviour
         Space,
         Enter,
         W, A, S, D,
+        Key0,
         Key1,
         Key2,
         Key3,
@@ -66,17 +67,22 @@ public class ManagerInput : MonoBehaviour
         //CallDelegate( OnMouse[(int)MyMouse.Wheel_up], Input.GetAxis( "Mouse ScrollWheel" ) );
         //CallDelegate( OnMouse[(int)MyMouse.Wheel_down], Input.GetMouseButton( 2 ) );
 
-        CallDelegate(OnKeyboard[(int)MyKeyboard.ArrowLeft], Input.GetKeyDown(KeyCode.LeftArrow));
-        CallDelegate(OnKeyboard[(int)MyKeyboard.ArrowRight], Input.GetKeyDown(KeyCode.RightArrow));
-        CallDelegate(OnKeyboard[(int)MyKeyboard.ArrowUp], Input.GetKeyDown(KeyCode.UpArrow));
-        CallDelegate(OnKeyboard[(int)MyKeyboard.ArrowDown], Input.GetKeyDown(KeyCode.DownArrow));
+
+        CallDelegate(OnKeyboard[(int)MyKeyboard.ArrowLeft], Input.GetKey(KeyCode.LeftArrow));
+        CallDelegate(OnKeyboard[(int)MyKeyboard.ArrowRight], Input.GetKey(KeyCode.RightArrow));
+        CallDelegate(OnKeyboard[(int)MyKeyboard.ArrowUp], Input.GetKey(KeyCode.UpArrow));
+        CallDelegate(OnKeyboard[(int)MyKeyboard.ArrowDown], Input.GetKey(KeyCode.DownArrow));
+        //CallDelegate(OnKeyboard[(int)MyKeyboard.Key0], Input.GetKeyDown(KeyCode.Alpha0));
+        CallDelegate(OnKeyboard[(int)MyKeyboard.Key0], Input.GetKeyDown(KeyCode.Keypad0));
+
 
         CallDelegate(OnKeyboard[(int)MyKeyboard.W], Input.GetKey(KeyCode.W));
         CallDelegate(OnKeyboard[(int)MyKeyboard.A], Input.GetKey(KeyCode.A));
         CallDelegate(OnKeyboard[(int)MyKeyboard.S], Input.GetKey(KeyCode.S));
         CallDelegate(OnKeyboard[(int)MyKeyboard.D], Input.GetKey(KeyCode.D));
-
         CallDelegate(OnKeyboard[(int)MyKeyboard.Space], Input.GetKeyDown(KeyCode.Space));
+
+
         CallDelegate(OnKeyboard[(int)MyKeyboard.Enter], Input.GetKeyDown(KeyCode.Return));
         //CallDelegate(OnKeyboard[(int)MyKeyboard.Enter], Input.GetKeyDown(KeyCode.KeypadEnter));
         CallDelegate(OnKeyboard[(int)MyKeyboard.Escape], Input.GetKeyDown(KeyCode.Escape));
@@ -145,12 +151,20 @@ public class ManagerInput : MonoBehaviour
 
             case Structs.GameScene.Ingame:
                 // TODO: Descomentar todo esto!
-                Bind(ref OnKeyboard[(int)MyKeyboard.Space], Director.Instance.DebugHurtPlayer);
                 Bind(ref OnKeyboard[(int)MyKeyboard.Escape], Director.Instance.GameEnd);
-                Bind(ref OnKeyboard[(int)MyKeyboard.W], Director.Instance.managerEntity.playerScript.MoveUp);
-                Bind(ref OnKeyboard[(int)MyKeyboard.S], Director.Instance.managerEntity.playerScript.MoveDown);
-                Bind(ref OnKeyboard[(int)MyKeyboard.A], Director.Instance.managerEntity.playerScript.MoveLeft);
-                Bind(ref OnKeyboard[(int)MyKeyboard.D], Director.Instance.managerEntity.playerScript.MoveRight);
+
+                Bind(ref OnKeyboard[(int)MyKeyboard.W], Director.Instance.managerEntity.playerScript1.MoveUp);
+                Bind(ref OnKeyboard[(int)MyKeyboard.S], Director.Instance.managerEntity.playerScript1.MoveDown);
+                Bind(ref OnKeyboard[(int)MyKeyboard.A], Director.Instance.managerEntity.playerScript1.MoveLeft);
+                Bind(ref OnKeyboard[(int)MyKeyboard.D], Director.Instance.managerEntity.playerScript1.MoveRight);
+                Bind(ref OnKeyboard[(int)MyKeyboard.Space], Director.Instance.managerEntity.playerScript1.Dash);
+
+                Bind(ref OnKeyboard[(int)MyKeyboard.ArrowUp], Director.Instance.managerEntity.playerScript2.MoveUp);
+                Bind(ref OnKeyboard[(int)MyKeyboard.ArrowDown], Director.Instance.managerEntity.playerScript2.MoveDown);
+                Bind(ref OnKeyboard[(int)MyKeyboard.ArrowLeft], Director.Instance.managerEntity.playerScript2.MoveLeft);
+                Bind(ref OnKeyboard[(int)MyKeyboard.ArrowRight], Director.Instance.managerEntity.playerScript2.MoveRight);
+                Bind(ref OnKeyboard[(int)MyKeyboard.Key0], Director.Instance.managerEntity.playerScript2.Dash);
+
                 //Bind(ref OnKeyboard[(int)MyKeyboard.Space], Director.Instance.PlayerJump);
                 //Bind(ref OnKeyboard[(int)MyKeyboard.Enter], Director.Instance.GenerateEnemy);
                 //Bind(ref OnKeyboard[(int)MyKeyboard.ArrowLeft], Director.Instance.MapPrevious);

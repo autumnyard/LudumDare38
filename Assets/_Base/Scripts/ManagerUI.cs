@@ -12,8 +12,8 @@ public class ManagerUI : MonoBehaviour
     private PanelBase panelLoading;
 
     // Panel HUD
-    [Header("Ingame HUD"), SerializeField] private UnityEngine.UI.Text health;
-    [SerializeField] private UnityEngine.UI.Text mana;
+    [Header("Ingame HUD"), SerializeField] private UnityEngine.UI.Text health1;
+    [SerializeField] private UnityEngine.UI.Text health2;
     [SerializeField] private UnityEngine.UI.Text score;
     [SerializeField] private UnityEngine.UI.Text enemycount;
 
@@ -63,15 +63,31 @@ public class ManagerUI : MonoBehaviour
     #endregion
 
     #region Inagem HUD management
-    public void SetHealth(int newHealth)
+    public void SetHealth(int id, int newHealth)
     {
-        if (newHealth < 0)
+        switch(id)
         {
-            health.text = "Health: --";
-        }
-        else
-        {
-            health.text = "Health: " + newHealth.ToString("00");
+            default:
+            case 1:
+                if (newHealth < 0)
+                {
+                    health1.text = "Health: --";
+                }
+                else
+                {
+                    health1.text = "Health: " + newHealth.ToString("00");
+                }
+                break;
+            case 2:
+                if (newHealth < 0)
+                {
+                    health2.text = "Health: --";
+                }
+                else
+                {
+                    health2.text = "Health: " + newHealth.ToString("00");
+                }
+                break;
         }
     }
     #endregion

@@ -7,6 +7,7 @@ public class EntityBase : MonoBehaviour
     public delegate void OnDieDelegate();
     public OnDieDelegate OnDie;
 
+
     #region Variables
     protected enum States
     {
@@ -25,8 +26,10 @@ public class EntityBase : MonoBehaviour
     new private Collider2D collider;
     new private SpriteRenderer renderer;
 
+    [SerializeField] protected int id;
+
     protected int health;
-    protected const int healthMax = 20;
+    protected const int healthMax = 3;
 
     private bool isInvulnerable;
     private const uint invulnerabilityFrames = 5u;
@@ -113,7 +116,7 @@ public class EntityBase : MonoBehaviour
             case States.Init:
                 SetInvulnerability(true);
                 health = healthMax;
-                Director.Instance.managerUI.SetHealth(health);
+                Director.Instance.managerUI.SetHealth(id, health);
                 ChangeState(States.Appearing); // Automatically change to appearing
                 break;
 
@@ -156,12 +159,13 @@ public class EntityBase : MonoBehaviour
     //    isInvulnerable = false;
     //}
 
-    public void Hurt( int damage = 10)
+    public void Hurt(int damage = 10)
     {
         if (!isInvulnerable)
         {
             health -= damage;
-            Director.Instance.managerUI.SetHealth(health);
+
+                    Director.Instance.managerUI.SetHealth(id, health);
 
             //Debug.Log(name+" was hurt, remaining health: "+ health);
 
@@ -187,6 +191,12 @@ public class EntityBase : MonoBehaviour
 
         //Debug.Log(name + " has died.");
     }
+
+    protected void Reappear()
+    {
+        ChangeState(States.Appearing);
+        transform.localPosition = Vector2.zero;
+    }
     #endregion
 
 
@@ -200,7 +210,9 @@ public class EntityBase : MonoBehaviour
     private void PlayAnimationHurting()
     {
         // Play animation, when it is finished change state to Normal
-        ChangeState(States.Normal);
+        //ChangeState(States.Normal);
+        // Cuando termina de morir, Reappear
+        Reappear();
     }
 
     private void PlayAnimationDying()

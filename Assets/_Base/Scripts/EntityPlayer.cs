@@ -7,6 +7,9 @@ public class EntityPlayer : EntityBase
     public delegate void OnExitDelegate();
     public OnExitDelegate OnExit;
 
+    public delegate void OnCollisionDelegate(Vector2 position);
+    public OnCollisionDelegate OnCollision;
+
     private float dashTime = 0.5f;
     private float dashAgainTime = 0.5f;
     private float impactForce = 6f;
@@ -141,13 +144,18 @@ public class EntityPlayer : EntityBase
 
             rigidbody.AddForce(rigidbody.velocity.normalized * impactForce, ForceMode2D.Impulse);
 
+            if (OnCollision != null)
+            {
+                OnCollision(transform.localPosition);
+            }
+
         }
     }
 
     IEnumerator DashTimer()
     {
         yield return new WaitForSeconds(dashTime);
-        if(currentState == States.Dashing) 
+        if (currentState == States.Dashing)
         {
             ChangeState(States.Normal);
             trail.time = 0.1f;

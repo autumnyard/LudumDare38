@@ -113,7 +113,7 @@ public class ManagerEntity : MonoBehaviour
     #region Holes management
     public void SummonHole(Vector2 position)
     {
-        holes.Add(Instantiate(prefabHole, this.transform) as GameObject);
+        holes.Add(Instantiate(prefabHole, position, Quaternion.identity) as GameObject);
     }
 
     public void RemoveHoles()

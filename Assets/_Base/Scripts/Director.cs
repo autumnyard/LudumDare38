@@ -96,10 +96,12 @@ public class Director : MonoBehaviour
                 if (managerEntity.playersScript[0] != null)
                 {
                     managerEntity.playersScript[0].OnDie += SwitchToScore;
+                    managerEntity.playersScript[0].OnCollision += managerEntity.SummonHole;
                 }
                 if (managerEntity.playersScript[1] != null)
                 {
                     managerEntity.playersScript[1].OnDie += SwitchToScore;
+                    managerEntity.playersScript[1].OnCollision += managerEntity.SummonHole;
                 }
 
                 managerInput.SetEvents();
@@ -108,7 +110,9 @@ public class Director : MonoBehaviour
 
             case Structs.GameScene.Score:
 
+                managerEntity.playersScript[0].OnCollision = null;
                 managerEntity.playersScript[0].OnDie = null;
+                managerEntity.playersScript[1].OnCollision = null;
                 managerEntity.playersScript[1].OnDie = null;
 
                 managerEntity.Reset();

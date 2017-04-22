@@ -8,6 +8,7 @@ public class EntityBase : MonoBehaviour
     public OnDieDelegate OnDie;
 
     protected bool canDash = true;
+    protected TrailRenderer trail;
 
     #region Variables
     protected enum States
@@ -93,6 +94,8 @@ public class EntityBase : MonoBehaviour
         {
             //Debug.LogWarning("Collider wasn't setted in " + this.gameObject.name);
         }
+
+        trail = transform.GetComponent<TrailRenderer>();
     }
 
     private void Start()

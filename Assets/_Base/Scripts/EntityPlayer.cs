@@ -39,6 +39,7 @@ public class EntityPlayer : EntityBase
         canDash = false;
         ChangeState(States.Dashing);
         dashTimerCoroutine = StartCoroutine(DashTimer());
+        trail.time = 0.5f;
 
         Vector2 direction = Vector2.zero;
 
@@ -132,6 +133,7 @@ public class EntityPlayer : EntityBase
         if(currentState == States.Dashing) 
         {
             ChangeState(States.Normal);
+            trail.time = 0.1f;
         }
 
         yield return new WaitForSeconds(dashAgainTime);

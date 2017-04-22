@@ -38,7 +38,7 @@ public class ManagerEntity : MonoBehaviour
 
 
     #region Entity Management
-    public void SummonPlayer()
+    public void SummonPlayers()
     {
         SummonPlayer(1);
         SummonPlayer(2);

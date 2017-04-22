@@ -145,8 +145,13 @@ public class ManagerInput : MonoBehaviour
         switch (Director.Instance.currentScene)
         {
             case Structs.GameScene.Menu:
-                Bind(ref OnKeyboard[(int)MyKeyboard.Enter], Director.Instance.GameBegin);
-                Bind(ref OnKeyboard[(int)MyKeyboard.Escape], Director.Instance.Exit);
+                Bind(ref OnKeyboard[(int)MyKeyboard.Enter], Director.Instance.managerUI.panelMenu.ButtonPlay);
+                Bind(ref OnKeyboard[(int)MyKeyboard.Escape], Director.Instance.managerUI.panelMenu.ButtonExit);
+                break;
+
+            case Structs.GameScene.Score:
+                Bind(ref OnKeyboard[(int)MyKeyboard.Enter], Director.Instance.managerUI.panelScore.ButtonReplay);
+                Bind(ref OnKeyboard[(int)MyKeyboard.Escape], Director.Instance.managerUI.panelScore.ButtonReturn);
                 break;
 
             case Structs.GameScene.Ingame:

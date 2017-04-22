@@ -88,22 +88,33 @@ public class Director : MonoBehaviour
                 //inputManager.SetEvents();
                 //uiManager.UpdateUI();
                 managerMap.SummonMap();
-                managerEntity.SummonPlayer();
+                managerEntity.SummonPlayers();
 
-                /*
-                if (managerEntity.playerScript1 != null)
+                if (managerEntity.playersScript[0] != null)
                 {
-                    managerEntity.playerScript1.OnDie += GameEnd;
+                    managerEntity.playersScript[0].OnDie += SwitchToScore;
                 }
-                */
+                if (managerEntity.playersScript[1] != null)
+                {
+                    managerEntity.playersScript[1].OnDie += SwitchToScore;
+                }
 
                 managerInput.SetEvents();
                 managerUI.SetPanels();
                 break;
 
-            case Structs.GameScene.GameEnd:
-                //managerEntity.playerScript1.OnDie -= GameEnd;
+            case Structs.GameScene.Score:
 
+                managerEntity.playersScript[0].OnDie = null;
+                managerEntity.playersScript[1].OnDie = null;
+
+                managerEntity.Reset();
+                managerMap.Reset();
+                managerInput.SetEvents();
+                managerUI.SetPanels();
+                break;
+
+            case Structs.GameScene.GameEnd:
                 managerEntity.Reset();
                 managerMap.Reset();
                 managerInput.SetEvents();
@@ -152,6 +163,11 @@ public class Director : MonoBehaviour
     private void SwitchToIngame()
     {
         ChangeScene(Structs.GameScene.Ingame);
+    }
+
+    public void SwitchToScore()
+    {
+        ChangeScene(Structs.GameScene.Score);
     }
 
     public void GameEnd()

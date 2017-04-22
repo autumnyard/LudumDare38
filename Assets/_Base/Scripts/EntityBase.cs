@@ -17,7 +17,8 @@ public class EntityBase : MonoBehaviour
         Hurting,
         Dying,
         Dead,
-        MaxValues
+        MaxValues,
+        Dashing
     }
     protected States currentState { private set; get; }
 

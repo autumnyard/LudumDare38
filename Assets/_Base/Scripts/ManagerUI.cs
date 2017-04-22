@@ -19,6 +19,7 @@ public class ManagerUI : MonoBehaviour
     [SerializeField] private UnityEngine.UI.Text health2;
     [SerializeField] private UnityEngine.UI.Text score;
     [SerializeField] private UnityEngine.UI.Text enemycount;
+    private string healthText = "Lifes: ";
 
     void Awake()
     {
@@ -84,21 +85,21 @@ public class ManagerUI : MonoBehaviour
             case 1:
                 if (newHealth < 0)
                 {
-                    health1.text = "Health: --";
+                    health1.text = healthText+" --";
                 }
                 else
                 {
-                    health1.text = "Health: " + newHealth.ToString("00");
+                    health1.text = healthText + newHealth.ToString("0");
                 }
                 break;
             case 2:
                 if (newHealth < 0)
                 {
-                    health2.text = "Health: --";
+                    health2.text = healthText+" --";
                 }
                 else
                 {
-                    health2.text = "Health: " + newHealth.ToString("00");
+                    health2.text = healthText + newHealth.ToString("0");
                 }
                 break;
         }

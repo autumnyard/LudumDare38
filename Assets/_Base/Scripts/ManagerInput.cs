@@ -155,7 +155,7 @@ public class ManagerInput : MonoBehaviour
                 break;
 
             case Structs.GameScene.Ingame:
-                // TODO: Descomentar todo esto!
+                // TODO: Este deberia pausar o llevar al score: TogglePause
                 Bind(ref OnKeyboard[(int)MyKeyboard.Escape], Director.Instance.GameEnd);
 
                 Bind(ref OnKeyboard[(int)MyKeyboard.W], Director.Instance.managerEntity.playersScript[0].MoveUp);

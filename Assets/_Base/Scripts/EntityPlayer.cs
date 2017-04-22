@@ -7,7 +7,6 @@ public class EntityPlayer : EntityBase
     public delegate void OnExitDelegate();
     public OnExitDelegate OnExit;
 
-    private bool canDash = true;
     private float dashTime = 0.5f;
     private float dashAgainTime = 0.5f;
 
@@ -119,7 +118,10 @@ public class EntityPlayer : EntityBase
                 OnExit();
             }
             */
-            StopCoroutine(dashTimerCoroutine);
+            if (dashTimerCoroutine != null)
+            {
+                StopCoroutine(dashTimerCoroutine);
+            }
             Hurt(1);
         }
     }

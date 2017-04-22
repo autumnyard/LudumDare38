@@ -153,17 +153,17 @@ public class ManagerInput : MonoBehaviour
                 // TODO: Descomentar todo esto!
                 Bind(ref OnKeyboard[(int)MyKeyboard.Escape], Director.Instance.GameEnd);
 
-                Bind(ref OnKeyboard[(int)MyKeyboard.W], Director.Instance.managerEntity.playerScript1.MoveUp);
-                Bind(ref OnKeyboard[(int)MyKeyboard.S], Director.Instance.managerEntity.playerScript1.MoveDown);
-                Bind(ref OnKeyboard[(int)MyKeyboard.A], Director.Instance.managerEntity.playerScript1.MoveLeft);
-                Bind(ref OnKeyboard[(int)MyKeyboard.D], Director.Instance.managerEntity.playerScript1.MoveRight);
-                Bind(ref OnKeyboard[(int)MyKeyboard.Space], Director.Instance.managerEntity.playerScript1.Dash);
+                Bind(ref OnKeyboard[(int)MyKeyboard.W], Director.Instance.managerEntity.playersScript[0].MoveUp);
+                Bind(ref OnKeyboard[(int)MyKeyboard.S], Director.Instance.managerEntity.playersScript[0].MoveDown);
+                Bind(ref OnKeyboard[(int)MyKeyboard.A], Director.Instance.managerEntity.playersScript[0].MoveLeft);
+                Bind(ref OnKeyboard[(int)MyKeyboard.D], Director.Instance.managerEntity.playersScript[0].MoveRight);
+                Bind(ref OnKeyboard[(int)MyKeyboard.Space], Director.Instance.managerEntity.playersScript[0].Dash);
 
-                Bind(ref OnKeyboard[(int)MyKeyboard.ArrowUp], Director.Instance.managerEntity.playerScript2.MoveUp);
-                Bind(ref OnKeyboard[(int)MyKeyboard.ArrowDown], Director.Instance.managerEntity.playerScript2.MoveDown);
-                Bind(ref OnKeyboard[(int)MyKeyboard.ArrowLeft], Director.Instance.managerEntity.playerScript2.MoveLeft);
-                Bind(ref OnKeyboard[(int)MyKeyboard.ArrowRight], Director.Instance.managerEntity.playerScript2.MoveRight);
-                Bind(ref OnKeyboard[(int)MyKeyboard.Key0], Director.Instance.managerEntity.playerScript2.Dash);
+                Bind(ref OnKeyboard[(int)MyKeyboard.ArrowUp], Director.Instance.managerEntity.playersScript[1].MoveUp);
+                Bind(ref OnKeyboard[(int)MyKeyboard.ArrowDown], Director.Instance.managerEntity.playersScript[1].MoveDown);
+                Bind(ref OnKeyboard[(int)MyKeyboard.ArrowLeft], Director.Instance.managerEntity.playersScript[1].MoveLeft);
+                Bind(ref OnKeyboard[(int)MyKeyboard.ArrowRight], Director.Instance.managerEntity.playersScript[1].MoveRight);
+                Bind(ref OnKeyboard[(int)MyKeyboard.Key0], Director.Instance.managerEntity.playersScript[1].Dash);
 
                 //Bind(ref OnKeyboard[(int)MyKeyboard.Space], Director.Instance.PlayerJump);
                 //Bind(ref OnKeyboard[(int)MyKeyboard.Enter], Director.Instance.GenerateEnemy);

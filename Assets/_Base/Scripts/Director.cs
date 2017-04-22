@@ -90,17 +90,19 @@ public class Director : MonoBehaviour
                 managerMap.SummonMap();
                 managerEntity.SummonPlayer();
 
+                /*
                 if (managerEntity.playerScript1 != null)
                 {
                     managerEntity.playerScript1.OnDie += GameEnd;
                 }
+                */
 
                 managerInput.SetEvents();
                 managerUI.SetPanels();
                 break;
 
             case Structs.GameScene.GameEnd:
-                managerEntity.playerScript1.OnDie -= GameEnd;
+                //managerEntity.playerScript1.OnDie -= GameEnd;
 
                 managerEntity.Reset();
                 managerMap.Reset();
@@ -166,6 +168,7 @@ public class Director : MonoBehaviour
 
 
     #region DEBUG
+    /*
     public void DebugHurtPlayer1()
     {
         managerEntity.playerScript1.Hurt();
@@ -175,5 +178,6 @@ public class Director : MonoBehaviour
     {
         managerEntity.playerScript2.Hurt();
     }
+    */
     #endregion
 }

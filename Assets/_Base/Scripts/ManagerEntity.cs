@@ -5,14 +5,22 @@ using UnityEngine;
 public class ManagerEntity : MonoBehaviour
 {
 
-    [SerializeField] private GameObject prefabPlayer1;
-    private GameObject player1;
-    [HideInInspector] public EntityPlayer playerScript1;
+    //[SerializeField] private GameObject prefabPlayer1;
+    //private GameObject player1;
+    //[HideInInspector] public EntityPlayer playerScript1;
 
 
-    [SerializeField] private GameObject prefabPlayer2;
-    private GameObject player2;
-    [HideInInspector] public EntityPlayer playerScript2;
+    //[SerializeField] private GameObject prefabPlayer2;
+    //private GameObject player2;
+    //[HideInInspector] public EntityPlayer playerScript2;
+
+    const int maxPlayers = 4;
+
+    [SerializeField] private GameObject[] prefabPlayer = new GameObject[maxPlayers];
+    //private List<GameObject> player;
+    //[HideInInspector] public List<EntityPlayer> playerScript;
+    private GameObject[] players = new GameObject[maxPlayers];
+    [HideInInspector] public EntityPlayer[] playersScript = new EntityPlayer[maxPlayers];
 
 
     [SerializeField] private GameObject prefabHole;
@@ -24,38 +32,42 @@ public class ManagerEntity : MonoBehaviour
         Director.Instance.managerEntity = this;
 
         holes = new List<GameObject>();
+        //player = new List<GameObject>();
+        //playerScript = new List<EntityPlayer>();
     }
 
 
     #region Entity Management
-    public void SummonPlayer()
+    public void SummonPlayers()
     {
-        player1 = Instantiate(prefabPlayer1, this.transform) as GameObject;
-        playerScript1 = player1.GetComponent<EntityPlayer>();
-
-        player2 = Instantiate(prefabPlayer2, this.transform) as GameObject;
-        playerScript2 = player2.GetComponent<EntityPlayer>();
+        SummonPlayer(1);
+        SummonPlayer(2);
     }
 
     public void SummonPlayer(int which)
     {
+
+        players[which - 1] = Instantiate(prefabPlayer[which - 1], this.transform) as GameObject;
+        playersScript[which - 1] = players[which - 1].GetComponent<EntityPlayer>();
+        /*
+        
         switch (which)
         {
             default:
             case 1:
-                player1 = Instantiate(prefabPlayer1, this.transform) as GameObject;
-                playerScript1 = player1.GetComponent<EntityPlayer>();
+                players[0] = Instantiate(prefabPlayer1, this.transform) as GameObject;
+                playersScript[0] = player1.GetComponent<EntityPlayer>();
+                //player.Add( Instantiate(prefabPlayer1, this.transform) as GameObject);
+                //playerScript.Add(player1.GetComponent<EntityPlayer>() );
                 break;
             case 2:
-                player2 = Instantiate(prefabPlayer2, this.transform) as GameObject;
-                playerScript2 = player2.GetComponent<EntityPlayer>();
+                //player2 = Instantiate(prefabPlayer2, this.transform) as GameObject;
+                //playerScript2 = player2.GetComponent<EntityPlayer>();
+                players[1] = Instantiate(prefabPlayer1, this.transform) as GameObject;
+                playersScript[1] = player1.GetComponent<EntityPlayer>();
                 break;
         }
-    }
-
-    public void SummonHole(Vector2 position)
-    {
-        holes.Add(Instantiate(prefabPlayer1, this.transform) as GameObject);
+        */
     }
 
     private void RemovePlayers()
@@ -66,6 +78,13 @@ public class ManagerEntity : MonoBehaviour
 
     private void RemovePlayers(int which)
     {
+
+        if (players[which - 1] != null)
+        {
+            Destroy(players[which - 1]);
+            players[which - 1] = null;
+        }
+        /*
         switch (which)
         {
             default:
@@ -85,11 +104,36 @@ public class ManagerEntity : MonoBehaviour
                 }
                 break;
         }
+        */
     }
+
+    #endregion
+
+
+    #region Holes management
+    public void SummonHole(Vector2 position)
+    {
+        holes.Add(Instantiate(prefabHole, this.transform) as GameObject);
+    }
+
+    public void RemoveHoles()
+    {
+        if (holes.Count > 0)
+        {
+            var holesArray = holes.ToArray();
+            for (int i = 0; i < holesArray.Length; i++)
+            {
+                Destroy(holesArray[i]);
+            }
+            holes.Clear();
+        }
+    }
+    #endregion
+
 
     public void Reset()
     {
+        RemoveHoles();
         RemovePlayers();
     }
-    #endregion
 }

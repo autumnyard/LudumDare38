@@ -9,6 +9,7 @@ public class EntityPlayer : EntityBase
 
     private float dashTime = 0.5f;
     private float dashAgainTime = 0.5f;
+    private float impactForce = 6f;
 
     [SerializeField, Range(4f, 20f)] private float speed = 7f;
     [SerializeField, Range(0.1f, 6f)] private float dash = 4f;
@@ -124,6 +125,22 @@ public class EntityPlayer : EntityBase
                 StopCoroutine(dashTimerCoroutine);
             }
             Hurt(1);
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player") && collision.gameObject.GetComponent<EntityBase>().currentState == States.Dashing)
+        {
+            //rigidbody.sharedMaterial.bounciness = 12;
+            //collider.enabled = false;
+            //collider.enabled = true;
+
+            //Vector2 impactVelocity = collision.rigidbody.velocity.normalized;
+            //rigidbody.AddForce(impactVelocity * 20f, ForceMode2D.Impulse);
+
+            rigidbody.AddForce(rigidbody.velocity.normalized * impactForce, ForceMode2D.Impulse);
+
         }
     }
 

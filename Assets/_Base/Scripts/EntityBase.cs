@@ -11,7 +11,7 @@ public class EntityBase : MonoBehaviour
     protected TrailRenderer trail;
 
     #region Variables
-    protected enum States
+    public enum States
     {
         Init = 0,
         Appearing,
@@ -19,14 +19,14 @@ public class EntityBase : MonoBehaviour
         Hurting,
         Dying,
         Dead,
-        MaxValues,
-        Dashing
+        Dashing,
+        MaxValues
     }
-    protected States currentState { private set; get; }
+    public States currentState { private set; get; }
 
     private Animator animator;
     new protected Rigidbody2D rigidbody;
-    new private Collider2D collider;
+    new protected Collider2D collider;
     new private SpriteRenderer renderer;
 
     [SerializeField] protected int id;

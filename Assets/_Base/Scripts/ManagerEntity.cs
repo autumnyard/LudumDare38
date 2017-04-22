@@ -7,7 +7,7 @@ public class ManagerEntity : MonoBehaviour
 
     [SerializeField] private GameObject prefabPlayer;
     private GameObject player;
-    [HideInInspector] public EntityBase playerScript;
+    [HideInInspector] public EntityPlayer playerScript;
 
 
     void Awake()
@@ -20,8 +20,7 @@ public class ManagerEntity : MonoBehaviour
     public void SummonPlayer()
     {
         player = Instantiate(prefabPlayer, this.transform) as GameObject;
-
-        playerScript = player.GetComponent<EntityBase>();
+        playerScript = player.GetComponent<EntityPlayer>();
     }
 
     private void RemovePlayer()

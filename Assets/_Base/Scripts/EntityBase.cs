@@ -21,7 +21,7 @@ public class EntityBase : MonoBehaviour
     protected States currentState { private set; get; }
 
     private Animator animator;
-    new private Rigidbody2D rigidbody;
+    new protected Rigidbody2D rigidbody;
     new private Collider2D collider;
     new private SpriteRenderer renderer;
 
@@ -78,17 +78,16 @@ public class EntityBase : MonoBehaviour
 
         if (collider == null)
         {
-            collider = GetComponent<Collider2D>();
+            collider = GetComponent<CircleCollider2D>();
         }
         if (collider == null)
         {
-            collider = GetComponentInChildren<Collider2D>();
+            collider = GetComponentInChildren<CircleCollider2D>();
         }
         if (collider == null)
         {
             //Debug.LogWarning("Collider wasn't setted in " + this.gameObject.name);
         }
-
     }
 
     private void Start()

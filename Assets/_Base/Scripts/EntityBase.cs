@@ -32,7 +32,8 @@ public class EntityBase : MonoBehaviour
     [SerializeField] protected int id;
 
     protected int health;
-    protected const int healthMax = 3;
+
+    [SerializeField] protected int healthMax = 3;
 
     private bool isInvulnerable;
     private const uint invulnerabilityFrames = 5u;
@@ -152,17 +153,22 @@ public class EntityBase : MonoBehaviour
     private void SetInvulnerability(bool to)
     {
         isInvulnerable = to;
+
+        if (isInvulnerable == true)
+        {
+            StartCoroutine(InvulnerabilityTimed());
+        }
     }
 
-    //private IEnumerator InvulnerabilityTimed()
-    //{
-    //    isInvulnerable = true;
-    //    for (uint i = 0; i < invulnerabilityFrames; i++)
-    //    {
-    //        yield return new WaitForEndOfFrame();
-    //    }
-    //    isInvulnerable = false;
-    //}
+    private IEnumerator InvulnerabilityTimed()
+    {
+        renderer.color = new Color(renderer.color.r, renderer.color.g, renderer.color.b, 0.5f);
+        collider.enabled = false;
+        yield return new WaitForSeconds(0.75f);
+        collider.enabled = true;
+        isInvulnerable = false;
+        renderer.color = new Color(renderer.color.r, renderer.color.g, renderer.color.b, 1f);
+    }
 
     public void Hurt(int damage = 10)
     {
@@ -181,6 +187,7 @@ public class EntityBase : MonoBehaviour
             else
             {
                 ChangeState(States.Hurting);
+                SetInvulnerability(true);
             }
         }
     }

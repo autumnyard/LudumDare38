@@ -20,6 +20,8 @@ public class Director : MonoBehaviour
     public Structs.GameDifficulty currentGameDifficulty { private set; get; }
     public Structs.GameView currentGameView { private set; get; }
     public Structs.GameScene currentScene;
+
+    public bool isPaused;
     #endregion
 
 
@@ -87,6 +89,7 @@ public class Director : MonoBehaviour
             case Structs.GameScene.Ingame:
                 //inputManager.SetEvents();
                 //uiManager.UpdateUI();
+                Unpause();
                 managerMap.SummonMap();
                 managerEntity.SummonPlayers();
 
@@ -180,10 +183,46 @@ public class Director : MonoBehaviour
         Debug.Log("Exit game!");
         ChangeScene(Structs.GameScene.Exit);
     }
+
+    public void TogglePause()
+    {
+        if(isPaused)
+        {
+            Unpause();
+        }
+        else
+        {
+            Pause();
+        }
+    }
+
+    private void Pause()
+    {
+        isPaused = true;
+        managerUI.panelPause.Show();
+        Time.timeScale = 0f;
+    }
+    private void Unpause()
+    {
+        Time.timeScale = 1f;
+        managerUI.panelPause.Hide();
+        isPaused = false;
+    }
     #endregion
 
 
     #region DEBUG
+
+    //void OnApplicationFocus(bool hasFocus)
+    //{
+    //    Debug.Log("OnApplicationFocus");
+    //}
+
+    //void OnApplicationPause(bool pauseStatus)
+    //{
+    //    Debug.Log("OnApplicationPause");
+    //}
+
     /*
     public void DebugHurtPlayer1()
     {

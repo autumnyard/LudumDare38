@@ -14,9 +14,16 @@ public class ManagerEntity : MonoBehaviour
     private GameObject player2;
     [HideInInspector] public EntityPlayer playerScript2;
 
+
+    [SerializeField] private GameObject prefabHole;
+    private List<GameObject> holes;
+
+
     void Awake()
     {
         Director.Instance.managerEntity = this;
+
+        holes = new List<GameObject>();
     }
 
 
@@ -46,20 +53,15 @@ public class ManagerEntity : MonoBehaviour
         }
     }
 
+    public void SummonHole(Vector2 position)
+    {
+        holes.Add(Instantiate(prefabPlayer1, this.transform) as GameObject);
+    }
+
     private void RemovePlayers()
     {
-        if (player1 != null)
-        {
-            Destroy(player1);
-            player1 = null;
-        }
-
-        if (player2 != null)
-        {
-            Destroy(player2);
-            player2 = null;
-        }
-
+        RemovePlayers(1);
+        RemovePlayers(2);
     }
 
     private void RemovePlayers(int which)

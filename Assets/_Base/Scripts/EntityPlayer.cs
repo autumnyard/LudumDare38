@@ -17,6 +17,7 @@ public class EntityPlayer : EntityBase
     public float dashAgainTime = 0.5f;
     public float impactForce = 6f;
     public float velocityLimit = 6f;
+    public float moonBounce = 2f;
 
     [SerializeField, Range(4f, 20f)] private float runSpeed = 4f;
     [SerializeField, Range(0.1f, 10f)] private float dashSpeed = 6f;
@@ -208,6 +209,10 @@ public class EntityPlayer : EntityBase
                 Camera.main.GetComponent<TweenShake>().Play();
             }
 
+        }
+        else if(collision.gameObject.CompareTag("Moon"))
+        {
+            rigidbody.AddForce(rigidbody.velocity.normalized * moonBounce, ForceMode2D.Impulse);
         }
         else
         {

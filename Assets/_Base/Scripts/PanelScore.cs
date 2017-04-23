@@ -2,6 +2,7 @@
 public class PanelScore : PanelBase
 {
     public Image winnerSprite;
+    public Text winnerText;
 
     public void ButtonReplay()
     {
@@ -23,8 +24,9 @@ public class PanelScore : PanelBase
         Director.Instance.GameEnd();
     }
 
-    public void SetWinner(UnityEngine.Sprite to)
+    public void SetWinner(UnityEngine.Sprite to, int playerWho)
     {
         winnerSprite.sprite = to;
+        winnerText.text = "Player " + playerWho.ToString("0");
     }
 }

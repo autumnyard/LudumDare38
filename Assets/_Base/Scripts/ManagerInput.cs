@@ -79,6 +79,16 @@ public class ManagerInput : MonoBehaviour
             // For player 1
             if (Director.Instance.managerEntity.playersScript[0] != null)
             {
+                CallDelegate(OnKeyboard[(int)MyKeyboard.ArrowLeft], Input.GetKey(KeyCode.LeftArrow));
+                CallDelegate(OnKeyboard[(int)MyKeyboard.ArrowRight], Input.GetKey(KeyCode.RightArrow));
+                CallDelegate(OnKeyboard[(int)MyKeyboard.ArrowUp], Input.GetKey(KeyCode.UpArrow));
+                CallDelegate(OnKeyboard[(int)MyKeyboard.ArrowDown], Input.GetKey(KeyCode.DownArrow));
+                CallDelegate(OnKeyboard[(int)MyKeyboard.Key0], Input.GetKeyDown(KeyCode.Keypad0));
+            }
+
+            // For player 2
+            if (Director.Instance.managerEntity.playersScript[1] != null)
+            {
                 CallDelegate(OnKeyboard[(int)MyKeyboard.W], Input.GetKey(KeyCode.W));
                 CallDelegate(OnKeyboard[(int)MyKeyboard.A], Input.GetKey(KeyCode.A));
                 CallDelegate(OnKeyboard[(int)MyKeyboard.S], Input.GetKey(KeyCode.S));
@@ -92,18 +102,6 @@ public class ManagerInput : MonoBehaviour
                 CallDelegate(OnKeyboard[(int)MyKeyboard.S], (Input.GetAxis("JoyX1") < 0));
                 CallDelegate(OnKeyboard[(int)MyKeyboard.D], (Input.GetAxis("JoyX1") > 0));
                 CallDelegate(OnKeyboard[(int)MyKeyboard.ShiftLeft], (Input.GetButtonDown("JoyButton1")));
-
-            }
-
-            // For player 2
-            if (Director.Instance.managerEntity.playersScript[1] != null)
-            {
-                CallDelegate(OnKeyboard[(int)MyKeyboard.ArrowLeft], Input.GetKey(KeyCode.LeftArrow));
-                CallDelegate(OnKeyboard[(int)MyKeyboard.ArrowRight], Input.GetKey(KeyCode.RightArrow));
-                CallDelegate(OnKeyboard[(int)MyKeyboard.ArrowUp], Input.GetKey(KeyCode.UpArrow));
-                CallDelegate(OnKeyboard[(int)MyKeyboard.ArrowDown], Input.GetKey(KeyCode.DownArrow));
-                CallDelegate(OnKeyboard[(int)MyKeyboard.Key0], Input.GetKeyDown(KeyCode.Keypad0));
-
             }
 
             // For player 3
@@ -183,8 +181,6 @@ public class ManagerInput : MonoBehaviour
     #region Public
     public void SetEvents()
     {
-        //UnbindAllEverything( ref OnMouse );
-        //UnbindAllEverything( ref OnKeyboard );
         UnbindAll(ref OnMouse);
         UnbindAll(ref OnKeyboard);
 
@@ -208,22 +204,26 @@ public class ManagerInput : MonoBehaviour
                 Bind(ref OnKeyboard[(int)MyKeyboard.Escape], Director.Instance.TogglePause);
 
                 // For player 1
-                    Bind(ref OnKeyboard[(int)MyKeyboard.W], Director.Instance.managerEntity.playersScript[0].MoveUp);
-                    Bind(ref OnKeyboard[(int)MyKeyboard.S], Director.Instance.managerEntity.playersScript[0].MoveDown);
-                    Bind(ref OnKeyboard[(int)MyKeyboard.A], Director.Instance.managerEntity.playersScript[0].MoveLeft);
-                    Bind(ref OnKeyboard[(int)MyKeyboard.D], Director.Instance.managerEntity.playersScript[0].MoveRight);
-                    Bind(ref OnKeyboard[(int)MyKeyboard.ControlLeft], Director.Instance.managerEntity.playersScript[0].Dash);
-                    Bind(ref OnKeyboard[(int)MyKeyboard.ShiftLeft], Director.Instance.managerEntity.playersScript[0].Dash);
+                if (Director.Instance.managerEntity.playersScript[0] != null)
+                {
+                    Bind(ref OnKeyboard[(int)MyKeyboard.ArrowUp], Director.Instance.managerEntity.playersScript[0].MoveUp);
+                    Bind(ref OnKeyboard[(int)MyKeyboard.ArrowDown], Director.Instance.managerEntity.playersScript[0].MoveDown);
+                    Bind(ref OnKeyboard[(int)MyKeyboard.ArrowLeft], Director.Instance.managerEntity.playersScript[0].MoveLeft);
+                    Bind(ref OnKeyboard[(int)MyKeyboard.ArrowRight], Director.Instance.managerEntity.playersScript[0].MoveRight);
+                    Bind(ref OnKeyboard[(int)MyKeyboard.Key0], Director.Instance.managerEntity.playersScript[0].Dash);
+                }
 
                 // For player 2
                 if (Director.Instance.managerEntity.playersScript[1] != null)
                 {
-                    Bind(ref OnKeyboard[(int)MyKeyboard.ArrowUp], Director.Instance.managerEntity.playersScript[1].MoveUp);
-                    Bind(ref OnKeyboard[(int)MyKeyboard.ArrowDown], Director.Instance.managerEntity.playersScript[1].MoveDown);
-                    Bind(ref OnKeyboard[(int)MyKeyboard.ArrowLeft], Director.Instance.managerEntity.playersScript[1].MoveLeft);
-                    Bind(ref OnKeyboard[(int)MyKeyboard.ArrowRight], Director.Instance.managerEntity.playersScript[1].MoveRight);
-                    Bind(ref OnKeyboard[(int)MyKeyboard.Key0], Director.Instance.managerEntity.playersScript[1].Dash);
+                    Bind(ref OnKeyboard[(int)MyKeyboard.W], Director.Instance.managerEntity.playersScript[1].MoveUp);
+                    Bind(ref OnKeyboard[(int)MyKeyboard.S], Director.Instance.managerEntity.playersScript[1].MoveDown);
+                    Bind(ref OnKeyboard[(int)MyKeyboard.A], Director.Instance.managerEntity.playersScript[1].MoveLeft);
+                    Bind(ref OnKeyboard[(int)MyKeyboard.D], Director.Instance.managerEntity.playersScript[1].MoveRight);
+                    Bind(ref OnKeyboard[(int)MyKeyboard.ControlLeft], Director.Instance.managerEntity.playersScript[1].Dash);
+                    Bind(ref OnKeyboard[(int)MyKeyboard.ShiftLeft], Director.Instance.managerEntity.playersScript[1].Dash);
                 }
+
                 // For player 3
                 if (Director.Instance.currentGameMode == Structs.GameMode.Multi3players)
                 {
@@ -237,46 +237,8 @@ public class ManagerInput : MonoBehaviour
                         Bind(ref OnKeyboard[(int)MyKeyboard.ShiftRight], Director.Instance.managerEntity.playersScript[2].Dash);
                     }
                 }
-                //Bind(ref OnKeyboard[(int)MyKeyboard.Space], Director.Instance.PlayerJump);
-                //Bind(ref OnKeyboard[(int)MyKeyboard.Enter], Director.Instance.GenerateEnemy);
-                //Bind(ref OnKeyboard[(int)MyKeyboard.ArrowLeft], Director.Instance.MapPrevious);
-                //Bind(ref OnKeyboard[(int)MyKeyboard.ArrowRight], Director.Instance.MapNext);
                 break;
         }
     }
-    #endregion
-
-
-
-    #region DEPRECATED
-
-
-    //private void UnBind( ref Delegate to, Delegate method )
-    //{
-    //	if( to != null )
-    //	{
-    //		to -= method;
-    //	}
-    //}
-
-    //private void UnbindAll( ref Delegate from )
-    //{
-    //	if( from != null )
-    //	{
-    //		foreach( Delegate d in from.GetInvocationList() )
-    //		{
-    //			UnBind( ref from, d );
-    //		}
-    //	}
-    //}
-
-    //private void UnbindAllEverything( ref Delegate[] froms )
-    //{
-    //	for( int i = 0; i < froms.Length; i++ )
-    //	{
-    //		var from = froms[i];
-    //		UnbindAll( ref from );
-    //	}
-    //}
     #endregion
 }

@@ -21,7 +21,7 @@ public class ManagerUI : MonoBehaviour
     // Panel HUD
     const int maxPlayers = 3;
     [Header("Ingame HUD"), SerializeField] private UnityEngine.UI.Text[] health = new UnityEngine.UI.Text[maxPlayers];
-    private string healthText = "Lifes left\n";
+    private string healthText = "";//"Lifes left\n";
     [SerializeField] private Image[] playerSprite = new Image[3];
 
 

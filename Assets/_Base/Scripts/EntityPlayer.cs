@@ -22,6 +22,10 @@ public class EntityPlayer : EntityBase
     [SerializeField, Range(1f, 20f)] private float drag = 3f;
 
 
+    public AudioSource sfxChoque;
+    public AudioSource sfxDash;
+
+
     public void MoveUp()
     {
         rigidbody.AddForce(Vector2.up * speed, ForceMode2D.Force);
@@ -44,10 +48,18 @@ public class EntityPlayer : EntityBase
     {
         if (canDash == false) { return; }
 
+
+
         canDash = false;
         ChangeState(States.Dashing);
         dashTimerCoroutine = StartCoroutine(DashTimer());
         trail.time = 0.5f;
+
+
+        if (sfxDash != null)
+        {
+            sfxDash.Play();
+        }
 
         Vector2 direction = Vector2.zero;
 
@@ -169,6 +181,14 @@ public class EntityPlayer : EntityBase
                 Debug.Log(collider.transform.name);
             }
 
+        }
+        else
+        {
+
+            if (sfxChoque != null)
+            {
+                sfxChoque.Play();
+            }
         }
     }
 

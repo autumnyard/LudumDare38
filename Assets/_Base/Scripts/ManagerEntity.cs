@@ -8,6 +8,9 @@ public class ManagerEntity : MonoBehaviour
     [SerializeField] private GameObject prefabPlayer;
     private GameObject[] players = new GameObject[maxPlayers];
     [HideInInspector] public EntityPlayer[] playersScript = new EntityPlayer[maxPlayers];
+    private Vector2 player1StartPosition = new Vector2(-0.7f, 0.7f);
+    private Vector2 player2StartPosition = new Vector2(0.7f, 0.7f);
+    private Vector2 player3StartPosition = new Vector2(0f, -0.5f);
 
     // Holes
     [SerializeField] private GameObject prefabHole;
@@ -29,28 +32,28 @@ public class ManagerEntity : MonoBehaviour
     #region Entity Management
     public void SummonPlayers()
     {
-        SummonPlayer(1);
-        SummonPlayer(2);
+        SummonPlayer(1, player1StartPosition);
+        SummonPlayer(2, player2StartPosition);
 
         if (Director.Instance.currentGameMode == Structs.GameMode.Multi3players)
         {
-            SummonPlayer(3);
+            SummonPlayer(3, player3StartPosition);
         }
     }
 
-    public void SummonPlayer(int which)
+    public void SummonPlayer(int which, Vector2 position)
     {
         // Instantiate
-        Vector2 position = Vector2.zero;
+        //position = Vector2.zero;
         players[which - 1] = Instantiate(prefabPlayer, position, Quaternion.identity, this.transform) as GameObject;
         playersScript[which - 1] = players[which - 1].GetComponent<EntityPlayer>();
 
         // Pick a flag
         Sprite flag = flags[Random.Range(0, flags.Length)];
-        Debug.Log("Player " + which + " se le asigna la bandera " + flag.name);
+        ///Debug.Log("Player " + which + " se le asigna la bandera " + flag.name);
 
         // Settings
-        playersScript[which - 1].Set(which,flag);
+        playersScript[which - 1].Set(which, flag);
     }
 
     private void RemovePlayers()

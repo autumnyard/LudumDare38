@@ -28,3 +28,7 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+/Assets/Demigiant/DOTween/DOTween.dll.mdb.meta
+/Assets/Demigiant/DOTween/DOTween43.dll.mdb.meta
+/Assets/Demigiant/DOTween/DOTween46.dll.mdb.meta
+/Assets/Demigiant/DOTween/DOTween50.dll.mdb.meta

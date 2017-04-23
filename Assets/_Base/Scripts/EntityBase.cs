@@ -10,6 +10,8 @@ public class EntityBase : MonoBehaviour
     protected bool canDash = true;
     protected TrailRenderer trail;
 
+    public bool isDead { private set; get; }
+
     #region Variables
     public enum States
     {
@@ -123,6 +125,7 @@ public class EntityBase : MonoBehaviour
                 SetInvulnerability(true);
                 health = healthMax;
                 Director.Instance.managerUI.SetHealth(id, health);
+                isDead = false;
                 ChangeState(States.Appearing); // Automatically change to appearing
                 break;
 
@@ -194,7 +197,7 @@ public class EntityBase : MonoBehaviour
 
     private void Die()
     {
-        // TODO: This is a placeholder, this should be better integrated with entitymanager
+        isDead = true;
 
         if (OnDie != null)
         {

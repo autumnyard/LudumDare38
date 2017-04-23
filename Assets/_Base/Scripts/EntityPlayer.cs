@@ -184,7 +184,7 @@ public class EntityPlayer : EntityBase
         if (collision.gameObject.CompareTag("Player") && collision.gameObject.GetComponent<EntityBase>().currentState == States.Dashing)
         {
             Camera.main.GetComponent<TweenShake>().Play();
-
+            
             //rigidbody.sharedMaterial.bounciness = 12;
             //collider.enabled = false;
             //collider.enabled = true;

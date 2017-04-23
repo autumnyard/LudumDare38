@@ -178,7 +178,7 @@ public class EntityPlayer : EntityBase
             if (collider != null)
             {
                 collider.gameObject.GetComponent<TweenScale>().enabled = true;
-                Debug.Log(collider.transform.name);
+                //Debug.Log(collider.transform.name);
             }
 
         }

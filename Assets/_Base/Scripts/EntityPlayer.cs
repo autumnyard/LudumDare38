@@ -15,12 +15,11 @@ public class EntityPlayer : EntityBase
 
     private float dashTime = 0.5f;
     private float dashAgainTime = 0.5f;
-    private float impactForce = 6f;
+    public float impactForce = 6f;
+    public float velocityLimit = 6f;
 
-    [SerializeField, Range(4f, 20f)] private float speed = 7f;
-    [SerializeField, Range(0.1f, 6f)] private float dash = 4f;
-    [SerializeField, Range(1f, 20f)] private float drag = 3f;
-
+    [SerializeField, Range(4f, 20f)] private float runSpeed = 4f;
+    [SerializeField, Range(0.1f, 10f)] private float dashSpeed = 6f;
 
     public AudioSource sfxChoque;
     public AudioSource sfxDash;
@@ -28,19 +27,19 @@ public class EntityPlayer : EntityBase
 
     public void MoveUp()
     {
-        rigidbody.AddForce(Vector2.up * speed, ForceMode2D.Force);
+        rigidbody.AddForce(Vector2.up * runSpeed, ForceMode2D.Force);
     }
     public void MoveDown()
     {
-        rigidbody.AddForce(Vector2.down * speed, ForceMode2D.Force);
+        rigidbody.AddForce(Vector2.down * runSpeed, ForceMode2D.Force);
     }
     public void MoveLeft()
     {
-        rigidbody.AddForce(Vector2.left * speed, ForceMode2D.Force);
+        rigidbody.AddForce(Vector2.left * runSpeed, ForceMode2D.Force);
     }
     public void MoveRight()
     {
-        rigidbody.AddForce(Vector2.right * speed, ForceMode2D.Force);
+        rigidbody.AddForce(Vector2.right * runSpeed, ForceMode2D.Force);
     }
 
     Coroutine dashTimerCoroutine;
@@ -117,12 +116,12 @@ public class EntityPlayer : EntityBase
         // rigidbody.velocity = rigidbody.velocity.normalized;
         if (direction == Vector2.zero)
         {
-            rigidbody.AddForce(rigidbody.velocity.normalized * dash, ForceMode2D.Impulse);
+            rigidbody.AddForce(rigidbody.velocity.normalized * dashSpeed, ForceMode2D.Impulse);
         }
         else
         {
             rigidbody.velocity = Vector2.zero;
-            rigidbody.AddForce(direction.normalized * dash, ForceMode2D.Impulse);
+            rigidbody.AddForce(direction.normalized * dashSpeed, ForceMode2D.Impulse);
         }
 
     }
@@ -165,6 +164,10 @@ public class EntityPlayer : EntityBase
             //rigidbody.AddForce(impactVelocity * 20f, ForceMode2D.Impulse);
 
             rigidbody.AddForce(rigidbody.velocity.normalized * impactForce, ForceMode2D.Impulse);
+            if(rigidbody.velocity.magnitude > velocityLimit)
+            {
+                rigidbody.velocity = rigidbody.velocity.normalized * velocityLimit;
+            }
             Vector3 holePosition = new Vector3((collision.transform.position.x + transform.position.x) / 2, 
                                                (collision.transform.position.y + transform.position.y) / 2, transform.position.z); 
 
@@ -178,7 +181,6 @@ public class EntityPlayer : EntityBase
             if (collider != null)
             {
                 collider.gameObject.GetComponent<TweenScale>().enabled = true;
-                //Debug.Log(collider.transform.name);
             }
 
         }

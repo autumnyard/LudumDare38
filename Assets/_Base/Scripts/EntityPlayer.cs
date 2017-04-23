@@ -165,6 +165,7 @@ public class EntityPlayer : EntityBase
             Collider2D collider = Physics2D.OverlapCircle(holePosition, 0.1f, 1 << LayerMask.NameToLayer("MapPieces"));
             if (collider != null)
             {
+                collider.gameObject.GetComponent<TweenScale>().enabled = true;
                 Debug.Log(collider.transform.name);
             }
 

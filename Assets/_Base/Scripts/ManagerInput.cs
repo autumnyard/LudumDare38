@@ -86,6 +86,12 @@ public class ManagerInput : MonoBehaviour
                 CallDelegate(OnKeyboard[(int)MyKeyboard.ShiftLeft], Input.GetKey(KeyCode.LeftShift));
                 CallDelegate(OnKeyboard[(int)MyKeyboard.ControlLeft], Input.GetKey(KeyCode.LeftControl));
 
+                // Joypad
+                CallDelegate(OnKeyboard[(int)MyKeyboard.W], (Input.GetAxis("JoyY1") < 0));
+                CallDelegate(OnKeyboard[(int)MyKeyboard.A], (Input.GetAxis("JoyY1") > 0));
+                CallDelegate(OnKeyboard[(int)MyKeyboard.S], (Input.GetAxis("JoyX1") < 0));
+                CallDelegate(OnKeyboard[(int)MyKeyboard.D], (Input.GetAxis("JoyX1") > 0));
+                CallDelegate(OnKeyboard[(int)MyKeyboard.ShiftLeft], (Input.GetButtonDown("JoyButton1")));
 
             }
 
@@ -98,12 +104,6 @@ public class ManagerInput : MonoBehaviour
                 CallDelegate(OnKeyboard[(int)MyKeyboard.ArrowDown], Input.GetKey(KeyCode.DownArrow));
                 CallDelegate(OnKeyboard[(int)MyKeyboard.Key0], Input.GetKeyDown(KeyCode.Keypad0));
 
-                // Joypad
-                CallDelegate(OnKeyboard[(int)MyKeyboard.ArrowLeft], (Input.GetAxis("JoyX1") < 0));
-                CallDelegate(OnKeyboard[(int)MyKeyboard.ArrowRight], (Input.GetAxis("JoyX1") > 0));
-                CallDelegate(OnKeyboard[(int)MyKeyboard.ArrowUp], (Input.GetAxis("JoyY1") < 0));
-                CallDelegate(OnKeyboard[(int)MyKeyboard.ArrowDown], (Input.GetAxis("JoyY1") > 0));
-                CallDelegate(OnKeyboard[(int)MyKeyboard.Key0], (Input.GetButtonDown("JoyButton1")));
             }
 
             // For player 3
@@ -120,10 +120,10 @@ public class ManagerInput : MonoBehaviour
                     CallDelegate(OnKeyboard[(int)MyKeyboard.ControlRight], Input.GetKeyDown(KeyCode.RightControl));
 
                     // Joypad
-                    CallDelegate(OnKeyboard[(int)MyKeyboard.U], (Input.GetAxis("JoyX2") < 0));
-                    CallDelegate(OnKeyboard[(int)MyKeyboard.J], (Input.GetAxis("JoyX2") > 0));
-                    CallDelegate(OnKeyboard[(int)MyKeyboard.H], (Input.GetAxis("JoyY2") < 0));
-                    CallDelegate(OnKeyboard[(int)MyKeyboard.K], (Input.GetAxis("JoyY2") > 0));
+                    CallDelegate(OnKeyboard[(int)MyKeyboard.U], (Input.GetAxis("JoyY2") < 0));
+                    CallDelegate(OnKeyboard[(int)MyKeyboard.J], (Input.GetAxis("JoyY2") > 0));
+                    CallDelegate(OnKeyboard[(int)MyKeyboard.H], (Input.GetAxis("JoyX2") < 0));
+                    CallDelegate(OnKeyboard[(int)MyKeyboard.K], (Input.GetAxis("JoyX2") > 0));
                     CallDelegate(OnKeyboard[(int)MyKeyboard.ShiftRight], (Input.GetButtonDown("JoyButton2")));
                 }
             }

@@ -6,6 +6,7 @@ public class EntityBase : MonoBehaviour
 {
     public delegate void OnDieDelegate();
     public OnDieDelegate OnDie;
+    public float invulnerabilityTime = 1f;
 
     protected bool canDash = true;
     protected TrailRenderer trail;
@@ -167,7 +168,7 @@ public class EntityBase : MonoBehaviour
     {
         renderer.color = new Color(renderer.color.r, renderer.color.g, renderer.color.b, 0.5f);
         collider.enabled = false;
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(invulnerabilityTime);
         collider.enabled = true;
         isInvulnerable = false;
         renderer.color = new Color(renderer.color.r, renderer.color.g, renderer.color.b, 1f);

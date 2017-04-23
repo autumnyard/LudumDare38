@@ -164,7 +164,7 @@ public class EntityBase : MonoBehaviour
     {
         renderer.color = new Color(renderer.color.r, renderer.color.g, renderer.color.b, 0.5f);
         collider.enabled = false;
-        yield return new WaitForSeconds(0.75f);
+        yield return new WaitForSeconds(1.5f);
         collider.enabled = true;
         isInvulnerable = false;
         renderer.color = new Color(renderer.color.r, renderer.color.g, renderer.color.b, 1f);

@@ -153,12 +153,13 @@ public class EntityPlayer : EntityBase
             //rigidbody.AddForce(impactVelocity * 20f, ForceMode2D.Impulse);
 
             rigidbody.AddForce(rigidbody.velocity.normalized * impactForce, ForceMode2D.Impulse);
+            Vector3 holePosition = new Vector3((collision.transform.position.x + transform.position.x) / 2, 
+                                              (collision.transform.position.y + transform.position.y) / 2, transform.position.z); 
 
             if (OnCollision != null)
             {
-                OnCollision(transform.localPosition);
+                OnCollision(holePosition);
             }
-
         }
     }
 

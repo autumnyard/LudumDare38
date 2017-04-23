@@ -21,7 +21,9 @@ public class Director : MonoBehaviour
     public Structs.GameView currentGameView { private set; get; }
     public Structs.GameScene currentScene;
 
+    // Current game thingies
     public bool isPaused;
+    private int remainingPlayers = 0;
     #endregion
 
 
@@ -82,6 +84,16 @@ public class Director : MonoBehaviour
                 //InitCamera();
                 //SetCameraOnPlayer();
                 //GameStart();
+
+                // If we are in 2 player modes, or 3 player mode, change settings
+                if(currentGameMode == Structs.GameMode.Multi3players)
+                {
+                    remainingPlayers = 3;
+                }
+                else
+                {
+                    remainingPlayers = 2;
+                }
                 managerUI.SetPanels();
                 SwitchToIngame();
                 break;
@@ -95,13 +107,21 @@ public class Director : MonoBehaviour
 
                 if (managerEntity.playersScript[0] != null)
                 {
-                    managerEntity.playersScript[0].OnDie += SwitchToScore;
+                    managerEntity.playersScript[0].OnDie += EndGameConditionChecker;
                     managerEntity.playersScript[0].OnCollision += managerEntity.SummonHole;
                 }
                 if (managerEntity.playersScript[1] != null)
                 {
-                    managerEntity.playersScript[1].OnDie += SwitchToScore;
+                    managerEntity.playersScript[1].OnDie += EndGameConditionChecker;
                     managerEntity.playersScript[1].OnCollision += managerEntity.SummonHole;
+                }
+                if(currentGameMode == Structs.GameMode.Multi3players)
+                {
+                    if (managerEntity.playersScript[2] != null)
+                    {
+                        managerEntity.playersScript[2].OnDie += EndGameConditionChecker;
+                        managerEntity.playersScript[2].OnCollision += managerEntity.SummonHole;
+                    }
                 }
 
                 managerInput.SetEvents();
@@ -114,6 +134,11 @@ public class Director : MonoBehaviour
                 managerEntity.playersScript[0].OnDie = null;
                 managerEntity.playersScript[1].OnCollision = null;
                 managerEntity.playersScript[1].OnDie = null;
+                if (currentGameMode == Structs.GameMode.Multi3players)
+                {
+                    managerEntity.playersScript[2].OnCollision = null;
+                    managerEntity.playersScript[2].OnDie = null;
+                }
 
                 managerEntity.Reset();
                 managerMap.Reset();
@@ -224,6 +249,14 @@ public class Director : MonoBehaviour
 
 
     #region DEBUG
+    private void EndGameConditionChecker()
+    {
+        remainingPlayers--;
+        if(remainingPlayers <= 1)
+        {
+            SwitchToScore();
+        }
+    }
 
     //void OnApplicationFocus(bool hasFocus)
     //{

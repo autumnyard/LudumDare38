@@ -176,7 +176,7 @@ public class EntityBase : MonoBehaviour
         {
             health -= damage;
 
-                    Director.Instance.managerUI.SetHealth(id, health);
+            Director.Instance.managerUI.SetHealth(id, health);
 
             //Debug.Log(name+" was hurt, remaining health: "+ health);
 
@@ -200,6 +200,11 @@ public class EntityBase : MonoBehaviour
         {
             OnDie();
         }
+
+        //Debug.Log(name + " has died.");
+
+        // TODO: Esto peta? deberia borrarse a si mismo? borrarse desde fuera?
+        Director.Instance.managerEntity.RemovePlayer(id);
 
         //Debug.Log(name + " has died.");
     }

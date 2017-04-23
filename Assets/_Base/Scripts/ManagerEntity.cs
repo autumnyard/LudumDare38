@@ -77,12 +77,12 @@ public class ManagerEntity : MonoBehaviour
 
     private void RemovePlayers()
     {
-        RemovePlayers(1);
-        RemovePlayers(2);
-        RemovePlayers(3);
+        RemovePlayer(1);
+        RemovePlayer(2);
+        RemovePlayer(3);
     }
 
-    private void RemovePlayers(int which)
+    public void RemovePlayer(int which)
     {
 
         if (players[which - 1] != null)

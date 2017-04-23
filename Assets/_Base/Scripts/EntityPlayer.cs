@@ -202,6 +202,10 @@ public class EntityPlayer : EntityBase
             if (collider != null)
             {
                 collider.gameObject.GetComponent<TweenScale>().enabled = true;
+                collider.gameObject.GetComponent<TweenShake>().enabled = true;
+                collider.gameObject.GetComponent<TweenAlpha>().enabled = true;
+                collider.gameObject.GetComponent<SpriteRenderer>().sortingOrder = 2;
+                Camera.main.GetComponent<TweenShake>().Play();
             }
 
         }

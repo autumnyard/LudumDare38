@@ -13,7 +13,8 @@ public class EntityPlayer : EntityBase
 
     public SpriteRenderer sprite;
 
-    private float dashTime = 0.5f;
+    [Header("Movement physics")]
+    public float dashTime = 0.5f;
     public float dashAgainTime = 0.5f;
     public float impactForce = 6f;
     public float velocityLimit = 6f;
@@ -22,6 +23,7 @@ public class EntityPlayer : EntityBase
     [SerializeField, Range(4f, 20f)] private float runSpeed = 4f;
     [SerializeField, Range(0.1f, 10f)] private float dashSpeed = 6f;
 
+    [Header("Sound effects")]
     public AudioSource sfxChoque;
     public AudioSource sfxDash;
 
@@ -44,18 +46,24 @@ public class EntityPlayer : EntityBase
     }
 
     Coroutine dashTimerCoroutine;
+
     public void Dash()
     {
+        // Espera a que pueda hacer dash
         if (canDash == false) { return; }
-
-
 
         canDash = false;
         ChangeState(States.Dashing);
         dashTimerCoroutine = StartCoroutine(DashTimer());
+
+        // TRAIL
         trail.time = 0.5f;
 
-
+        /*
+        // GHOST
+        Debug.Log(" + Start dash");
+        GetComponent<GhostSprites>().enabled = true;
+        */
         if (sfxDash != null)
         {
             sfxDash.Play();
@@ -132,15 +140,12 @@ public class EntityPlayer : EntityBase
             default: break;
         }
 
-        //if(Input.)
-        //rigidbody.velocity.normalized;
-
-        // rigidbody.velocity = rigidbody.velocity.normalized;
+        // If we are not pressing anything, dash on the current direction
         if (direction == Vector2.zero)
         {
             rigidbody.AddForce(rigidbody.velocity.normalized * dashSpeed, ForceMode2D.Impulse);
         }
-        else
+        else // If we are pressing on a certain direction, dash over there
         {
             rigidbody.velocity = Vector2.zero;
             rigidbody.AddForce(direction.normalized * dashSpeed, ForceMode2D.Impulse);
@@ -148,7 +153,7 @@ public class EntityPlayer : EntityBase
 
     }
 
-    public void Set(int idNew, Sprite to )
+    public void Set(int idNew, Sprite to)
     {
         id = idNew;
         sprite.sprite = to;
@@ -186,12 +191,12 @@ public class EntityPlayer : EntityBase
             //rigidbody.AddForce(impactVelocity * 20f, ForceMode2D.Impulse);
 
             rigidbody.AddForce(rigidbody.velocity.normalized * impactForce, ForceMode2D.Impulse);
-            if(rigidbody.velocity.magnitude > velocityLimit)
+            if (rigidbody.velocity.magnitude > velocityLimit)
             {
                 rigidbody.velocity = rigidbody.velocity.normalized * velocityLimit;
             }
-            Vector3 holePosition = new Vector3((collision.transform.position.x + transform.position.x) / 2, 
-                                               (collision.transform.position.y + transform.position.y) / 2, transform.position.z); 
+            Vector3 holePosition = new Vector3((collision.transform.position.x + transform.position.x) / 2,
+                                               (collision.transform.position.y + transform.position.y) / 2, transform.position.z);
 
             if (OnCollision != null)
             {
@@ -210,7 +215,7 @@ public class EntityPlayer : EntityBase
             }
 
         }
-        else if(collision.gameObject.CompareTag("Moon"))
+        else if (collision.gameObject.CompareTag("Moon"))
         {
             rigidbody.AddForce(rigidbody.velocity.normalized * moonBounce, ForceMode2D.Impulse);
         }
@@ -231,6 +236,12 @@ public class EntityPlayer : EntityBase
         {
             ChangeState(States.Normal);
             trail.time = 0.1f;
+            /*
+            Debug.Log(" - Finish dash");
+            GetComponent<GhostSprites>().ClearTrail();
+            GetComponent<GhostSprites>().enabled = false;
+            */
+            //GetComponent<GhostSprites>().TrailSize = 0;
         }
 
         yield return new WaitForSeconds(dashAgainTime);

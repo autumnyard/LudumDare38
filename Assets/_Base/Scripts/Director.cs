@@ -98,6 +98,7 @@ public class Director : MonoBehaviour
                 //inputManager.SetEvents();
                 //uiManager.UpdateUI();
                 Unpause();
+                managerMap.Reset();
                 managerMap.SummonMap();
                 managerEntity.SummonPlayers();
 
@@ -140,7 +141,6 @@ public class Director : MonoBehaviour
                 }
 
                 managerEntity.Reset();
-                managerMap.Reset();
                 managerInput.SetEvents();
                 managerUI.SetPanels();
                 break;

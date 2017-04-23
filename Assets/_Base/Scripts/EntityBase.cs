@@ -1,15 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
+
 
 public class EntityBase : MonoBehaviour
 {
     public delegate void OnDieDelegate();
     public OnDieDelegate OnDie;
-    public float invulnerabilityTime = 1f;
 
     protected bool canDash = true;
     protected TrailRenderer trail;
+
+    private Vector3 initialPosition = Vector3.zero;
+
+
 
     public bool isDead { private set; get; }
 
@@ -32,16 +37,23 @@ public class EntityBase : MonoBehaviour
     new protected Collider2D collider;
     new private SpriteRenderer renderer;
 
-    [SerializeField] protected int id;
+    [Header("Data"), SerializeField] protected int id;
 
     protected int health;
+    public float invulnerabilityTime = 1f;
 
     [SerializeField] protected int healthMax = 3;
 
     private bool isInvulnerable;
     private const uint invulnerabilityFrames = 5u;
-    #endregion
 
+    // Tweens
+    [Header("Tweens")]
+    public TweenScale tweenAppear;
+    public TweenScale tweenDisappear;
+    private Vector3 scaleInit = Vector3.zero;
+    private Vector3 scaleEnd = Vector3.one;
+    #endregion
 
 
     #region Monobehaviour
@@ -100,6 +112,7 @@ public class EntityBase : MonoBehaviour
         }
 
         trail = transform.GetComponent<TrailRenderer>();
+        trail.sortingLayerName = "Entities";
     }
 
     private void Start()
@@ -124,6 +137,7 @@ public class EntityBase : MonoBehaviour
         {
             case States.Init:
                 SetInvulnerability(true);
+                initialPosition = transform.localPosition;
                 health = healthMax;
                 Director.Instance.managerUI.SetHealth(id, health);
                 isDead = false;
@@ -216,7 +230,8 @@ public class EntityBase : MonoBehaviour
     protected void Reappear()
     {
         ChangeState(States.Appearing);
-        transform.localPosition = Vector2.zero;
+        //transform.localPosition = Vector2.zero;
+        transform.localPosition = initialPosition;
         rigidbody.velocity = Vector2.zero;
         canDash = true;
     }
@@ -227,15 +242,37 @@ public class EntityBase : MonoBehaviour
     private void PlayAnimationAppearing()
     {
         // Play animation, when it is finished change state to Normal
-        ChangeState(States.Normal);
+        float scaleInit = 0f;
+        float scaleFinish = 1f;
+        float time = 0.4f;
+        Ease ease = Ease.OutBack;
+
+        transform.localScale.Set(scaleInit, scaleInit, transform.localScale.z);
+        transform.DOScale(new Vector3(scaleFinish, scaleFinish, transform.localScale.z), time)
+                          .SetEase(ease)
+                          .OnComplete(PlayAnimationAppearingHelper);
+
     }
+    private void PlayAnimationAppearingHelper()
+    {
+        ChangeState(States.Normal);
+
+    }
+
 
     private void PlayAnimationHurting()
     {
         // Play animation, when it is finished change state to Normal
-        //ChangeState(States.Normal);
-        // Cuando termina de morir, Reappear
-        Reappear();
+        float scaleInit = 1f;
+        float scaleFinish = 0f;
+        float time = 0.4f;
+        Ease ease = Ease.OutBack;
+
+        transform.localScale.Set(scaleInit, scaleInit, transform.localScale.z);
+        transform.DOScale(new Vector3(scaleFinish, scaleFinish, transform.localScale.z), time)
+                          .SetEase(ease)
+                          .OnComplete(Reappear);
+
     }
 
     private void PlayAnimationDying()
@@ -243,18 +280,6 @@ public class EntityBase : MonoBehaviour
         // Play animation, when it is finished change state to Dead
         ChangeState(States.Dead);
     }
-
     #endregion
 
-
-    #region Physics
-
-    //void OnTriggerExit(Collider col)
-    //{
-    //    if (col.gameObject.CompareTag("Boundary"))
-    //    {
-    //        Die();
-    //    }
-    //}
-    #endregion
 }

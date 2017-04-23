@@ -161,8 +161,16 @@ public class Director : MonoBehaviour
         ChangeScene(Structs.GameScene.Menu);
     }
 
-    public void GameBegin()
+    public void GameBegin(int players)
     {
+        if(players == 3)
+        {
+            currentGameMode = Structs.GameMode.Multi3players;
+        }
+        else
+        {
+            currentGameMode = Structs.GameMode.Multi2players;
+        }
         ChangeScene(Structs.GameScene.LoadingGame);
     }
 

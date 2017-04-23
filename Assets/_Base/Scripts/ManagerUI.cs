@@ -17,11 +17,9 @@ public class ManagerUI : MonoBehaviour
     public PanelBase panelPause;
 
     // Panel HUD
-    [Header("Ingame HUD"), SerializeField] private UnityEngine.UI.Text health1;
-    [SerializeField] private UnityEngine.UI.Text health2;
-    [SerializeField] private UnityEngine.UI.Text score;
-    [SerializeField] private UnityEngine.UI.Text enemycount;
-    private string healthText = "Lifes: ";
+    const int maxPlayers = 3;
+    [Header("Ingame HUD"), SerializeField] private UnityEngine.UI.Text[] health= new UnityEngine.UI.Text[maxPlayers];
+    private string healthText = "Lifes left: ";
 
     void Awake()
     {
@@ -55,6 +53,16 @@ public class ManagerUI : MonoBehaviour
                 panelLoading.Hide();
                 panelScore.Hide();
                 panelPause.Hide();
+
+                if(Director.Instance.currentGameMode == Structs.GameMode.Multi3players)
+                {
+                    health[2].transform.parent.gameObject.SetActive(true);
+                }
+                else
+                {
+                    health[2].transform.parent.gameObject.SetActive(false);
+
+                }
                 break;
 
             case Structs.GameScene.Score:
@@ -87,29 +95,13 @@ public class ManagerUI : MonoBehaviour
     #region Inagem HUD management
     public void SetHealth(int id, int newHealth)
     {
-        switch(id)
+        if (newHealth < 0)
         {
-            default:
-            case 1:
-                if (newHealth < 0)
-                {
-                    health1.text = healthText+" --";
-                }
-                else
-                {
-                    health1.text = healthText + newHealth.ToString("0");
-                }
-                break;
-            case 2:
-                if (newHealth < 0)
-                {
-                    health2.text = healthText+" --";
-                }
-                else
-                {
-                    health2.text = healthText + newHealth.ToString("0");
-                }
-                break;
+            health[id - 1].text = healthText + " --";
+        }
+        else
+        {
+            health[id - 1].text = healthText + newHealth.ToString("0");
         }
     }
     #endregion

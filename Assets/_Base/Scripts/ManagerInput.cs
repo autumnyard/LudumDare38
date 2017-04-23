@@ -23,7 +23,14 @@ public class ManagerInput : MonoBehaviour
         NONE,
         Space,
         Enter,
+        ControlAny,
+        ControlLeft,
+        ControlRight,
+        ShiftAny,
+        ShiftLeft,
+        ShiftRight,
         W, A, S, D,
+        U, H, J, K,
         Key0,
         Key1,
         Key2,
@@ -69,18 +76,31 @@ public class ManagerInput : MonoBehaviour
 
         if (!Director.Instance.isPaused)
         {
+            // For player 1
+            CallDelegate(OnKeyboard[(int)MyKeyboard.W], Input.GetKey(KeyCode.W));
+            CallDelegate(OnKeyboard[(int)MyKeyboard.A], Input.GetKey(KeyCode.A));
+            CallDelegate(OnKeyboard[(int)MyKeyboard.S], Input.GetKey(KeyCode.S));
+            CallDelegate(OnKeyboard[(int)MyKeyboard.D], Input.GetKey(KeyCode.D));
+            CallDelegate(OnKeyboard[(int)MyKeyboard.ShiftLeft], Input.GetKey(KeyCode.LeftShift));
+            CallDelegate(OnKeyboard[(int)MyKeyboard.ControlLeft], Input.GetKey(KeyCode.LeftControl));
+
+            // For player 2
             CallDelegate(OnKeyboard[(int)MyKeyboard.ArrowLeft], Input.GetKey(KeyCode.LeftArrow));
             CallDelegate(OnKeyboard[(int)MyKeyboard.ArrowRight], Input.GetKey(KeyCode.RightArrow));
             CallDelegate(OnKeyboard[(int)MyKeyboard.ArrowUp], Input.GetKey(KeyCode.UpArrow));
             CallDelegate(OnKeyboard[(int)MyKeyboard.ArrowDown], Input.GetKey(KeyCode.DownArrow));
             CallDelegate(OnKeyboard[(int)MyKeyboard.Key0], Input.GetKeyDown(KeyCode.Keypad0));
 
-
-            CallDelegate(OnKeyboard[(int)MyKeyboard.W], Input.GetKey(KeyCode.W));
-            CallDelegate(OnKeyboard[(int)MyKeyboard.A], Input.GetKey(KeyCode.A));
-            CallDelegate(OnKeyboard[(int)MyKeyboard.S], Input.GetKey(KeyCode.S));
-            CallDelegate(OnKeyboard[(int)MyKeyboard.D], Input.GetKey(KeyCode.D));
-            CallDelegate(OnKeyboard[(int)MyKeyboard.Space], Input.GetKeyDown(KeyCode.Space));
+            // For player 3
+            if (Director.Instance.currentGameMode == Structs.GameMode.Multi3players)
+            {
+                CallDelegate(OnKeyboard[(int)MyKeyboard.U], Input.GetKey(KeyCode.U));
+                CallDelegate(OnKeyboard[(int)MyKeyboard.J], Input.GetKey(KeyCode.J));
+                CallDelegate(OnKeyboard[(int)MyKeyboard.H], Input.GetKey(KeyCode.H));
+                CallDelegate(OnKeyboard[(int)MyKeyboard.K], Input.GetKey(KeyCode.K));
+                CallDelegate(OnKeyboard[(int)MyKeyboard.ShiftRight], Input.GetKeyDown(KeyCode.RightShift));
+                CallDelegate(OnKeyboard[(int)MyKeyboard.ControlRight], Input.GetKeyDown(KeyCode.RightControl));
+            }
         }
 
         CallDelegate(OnKeyboard[(int)MyKeyboard.Enter], Input.GetKeyDown(KeyCode.Return));
@@ -89,10 +109,10 @@ public class ManagerInput : MonoBehaviour
 
         //CallDelegate(OnKeyboard[(int)MyKeyboard.Key1], Input.GetKeyDown(KeyCode.Alpha1));
         //CallDelegate(OnKeyboard[(int)MyKeyboard.Key1], Input.GetKeyDown(KeyCode.Keypad1));
-        //CallDelegate(OnKeyboard[(int)MyKeyboard.Key2], Input.GetKeyDown(KeyCode.Alpha2));
-        //CallDelegate(OnKeyboard[(int)MyKeyboard.Key2], Input.GetKeyDown(KeyCode.Keypad2));
-        //CallDelegate(OnKeyboard[(int)MyKeyboard.Key3], Input.GetKeyDown(KeyCode.Alpha3));
-        //CallDelegate(OnKeyboard[(int)MyKeyboard.Key3], Input.GetKeyDown(KeyCode.Keypad3));
+        CallDelegate(OnKeyboard[(int)MyKeyboard.Key2], Input.GetKeyDown(KeyCode.Alpha2));
+        CallDelegate(OnKeyboard[(int)MyKeyboard.Key2], Input.GetKeyDown(KeyCode.Keypad2));
+        CallDelegate(OnKeyboard[(int)MyKeyboard.Key3], Input.GetKeyDown(KeyCode.Alpha3));
+        CallDelegate(OnKeyboard[(int)MyKeyboard.Key3], Input.GetKeyDown(KeyCode.Keypad3));
 
     }
 
@@ -145,30 +165,44 @@ public class ManagerInput : MonoBehaviour
         switch (Director.Instance.currentScene)
         {
             case Structs.GameScene.Menu:
-                Bind(ref OnKeyboard[(int)MyKeyboard.Enter], Director.Instance.managerUI.panelMenu.ButtonPlay);
+                Bind(ref OnKeyboard[(int)MyKeyboard.Enter], Director.Instance.managerUI.panelMenu.ButtonPlay2);
+                Bind(ref OnKeyboard[(int)MyKeyboard.Key2], Director.Instance.managerUI.panelMenu.ButtonPlay2);
+                Bind(ref OnKeyboard[(int)MyKeyboard.Key3], Director.Instance.managerUI.panelMenu.ButtonPlay3);
                 Bind(ref OnKeyboard[(int)MyKeyboard.Escape], Director.Instance.managerUI.panelMenu.ButtonExit);
                 break;
 
             case Structs.GameScene.Score:
                 Bind(ref OnKeyboard[(int)MyKeyboard.Enter], Director.Instance.managerUI.panelScore.ButtonReplay);
+                Bind(ref OnKeyboard[(int)MyKeyboard.Key2], Director.Instance.managerUI.panelScore.ButtonReplay2);
+                Bind(ref OnKeyboard[(int)MyKeyboard.Key3], Director.Instance.managerUI.panelScore.ButtonReplay3);
                 Bind(ref OnKeyboard[(int)MyKeyboard.Escape], Director.Instance.managerUI.panelScore.ButtonReturn);
                 break;
 
             case Structs.GameScene.Ingame:
                 Bind(ref OnKeyboard[(int)MyKeyboard.Escape], Director.Instance.TogglePause);
 
+                // For player 1
                 Bind(ref OnKeyboard[(int)MyKeyboard.W], Director.Instance.managerEntity.playersScript[0].MoveUp);
                 Bind(ref OnKeyboard[(int)MyKeyboard.S], Director.Instance.managerEntity.playersScript[0].MoveDown);
                 Bind(ref OnKeyboard[(int)MyKeyboard.A], Director.Instance.managerEntity.playersScript[0].MoveLeft);
                 Bind(ref OnKeyboard[(int)MyKeyboard.D], Director.Instance.managerEntity.playersScript[0].MoveRight);
-                Bind(ref OnKeyboard[(int)MyKeyboard.Space], Director.Instance.managerEntity.playersScript[0].Dash);
+                Bind(ref OnKeyboard[(int)MyKeyboard.ControlLeft], Director.Instance.managerEntity.playersScript[0].Dash);
+                Bind(ref OnKeyboard[(int)MyKeyboard.ShiftLeft], Director.Instance.managerEntity.playersScript[0].Dash);
 
+                // For player 2
                 Bind(ref OnKeyboard[(int)MyKeyboard.ArrowUp], Director.Instance.managerEntity.playersScript[1].MoveUp);
                 Bind(ref OnKeyboard[(int)MyKeyboard.ArrowDown], Director.Instance.managerEntity.playersScript[1].MoveDown);
                 Bind(ref OnKeyboard[(int)MyKeyboard.ArrowLeft], Director.Instance.managerEntity.playersScript[1].MoveLeft);
                 Bind(ref OnKeyboard[(int)MyKeyboard.ArrowRight], Director.Instance.managerEntity.playersScript[1].MoveRight);
                 Bind(ref OnKeyboard[(int)MyKeyboard.Key0], Director.Instance.managerEntity.playersScript[1].Dash);
 
+                // For player 3
+                Bind(ref OnKeyboard[(int)MyKeyboard.U], Director.Instance.managerEntity.playersScript[2].MoveUp);
+                Bind(ref OnKeyboard[(int)MyKeyboard.J], Director.Instance.managerEntity.playersScript[2].MoveDown);
+                Bind(ref OnKeyboard[(int)MyKeyboard.H], Director.Instance.managerEntity.playersScript[2].MoveLeft);
+                Bind(ref OnKeyboard[(int)MyKeyboard.K], Director.Instance.managerEntity.playersScript[2].MoveRight);
+                Bind(ref OnKeyboard[(int)MyKeyboard.ControlRight], Director.Instance.managerEntity.playersScript[2].Dash);
+                Bind(ref OnKeyboard[(int)MyKeyboard.ShiftRight], Director.Instance.managerEntity.playersScript[2].Dash);
 
                 //Bind(ref OnKeyboard[(int)MyKeyboard.Space], Director.Instance.PlayerJump);
                 //Bind(ref OnKeyboard[(int)MyKeyboard.Enter], Director.Instance.GenerateEnemy);

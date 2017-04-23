@@ -14,7 +14,7 @@ public class ManagerEntity : MonoBehaviour
     //private GameObject player2;
     //[HideInInspector] public EntityPlayer playerScript2;
 
-    const int maxPlayers = 4;
+    const int maxPlayers = 3;
 
     [SerializeField] private GameObject[] prefabPlayer = new GameObject[maxPlayers];
     //private List<GameObject> player;
@@ -42,12 +42,17 @@ public class ManagerEntity : MonoBehaviour
     {
         SummonPlayer(1);
         SummonPlayer(2);
+
+        if (Director.Instance.currentGameMode == Structs.GameMode.Multi3players)
+        {
+            SummonPlayer(3);
+        }
     }
 
     public void SummonPlayer(int which)
     {
-
-        players[which - 1] = Instantiate(prefabPlayer[which - 1], this.transform) as GameObject;
+        Vector2 position = Vector2.zero;
+        players[which - 1] = Instantiate(prefabPlayer[which - 1], position, Quaternion.identity, this.transform) as GameObject;
         playersScript[which - 1] = players[which - 1].GetComponent<EntityPlayer>();
         /*
         
@@ -74,6 +79,7 @@ public class ManagerEntity : MonoBehaviour
     {
         RemovePlayers(1);
         RemovePlayers(2);
+        RemovePlayers(3);
     }
 
     private void RemovePlayers(int which)

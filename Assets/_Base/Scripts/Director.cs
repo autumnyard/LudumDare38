@@ -207,7 +207,23 @@ public class Director : MonoBehaviour
     public void SwitchToScore()
     {
         // TODO: Asignar el sprite del entity ganador
-        managerUI.panelScore.SetWinner(managerEntity.playersScript[0].sprite.sprite);
+        if (managerEntity.playersScript[2] != null && !managerEntity.playersScript[2].isDead)
+        {
+            managerUI.panelScore.SetWinner(managerEntity.playersScript[2].sprite.sprite);
+        }
+        else if (managerEntity.playersScript[1] != null && !managerEntity.playersScript[1].isDead)
+        {
+            managerUI.panelScore.SetWinner(managerEntity.playersScript[1].sprite.sprite);
+        }
+        else if (managerEntity.playersScript[0] != null && !managerEntity.playersScript[0].isDead)
+        {
+            managerUI.panelScore.SetWinner(managerEntity.playersScript[0].sprite.sprite);
+        }
+        else
+        {
+
+        }
+        //Debug.Log(managerEntity.playersScript[0].isDead);
         ChangeScene(Structs.GameScene.Score);
     }
 

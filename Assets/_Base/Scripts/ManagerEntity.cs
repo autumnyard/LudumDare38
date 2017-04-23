@@ -47,7 +47,7 @@ public class ManagerEntity : MonoBehaviour
 
         // Pick a flag
         Sprite flag = flags[Random.Range(0, flags.Length)];
-        Debug.Log("Player " + which + " se le asigna la bandera " + flag.name);
+        ///Debug.Log("Player " + which + " se le asigna la bandera " + flag.name);
 
         // Settings
         playersScript[which - 1].Set(which,flag);

@@ -1,17 +1,13 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
-
 
 public class Director : MonoBehaviour
 {
-
     #region Variables
     public GameManager gameManager;
     //public CameraManager cameraManager;
     //public Player player;
     public ManagerMap managerMap;
     public ManagerEntity managerEntity;
-    //public WavesManager waveManager;
     public ManagerInput managerInput;
     public ManagerUI managerUI;
     //public ScoreManager scoreManager;
@@ -86,7 +82,7 @@ public class Director : MonoBehaviour
                 //GameStart();
 
                 // If we are in 2 player modes, or 3 player mode, change settings
-                if(currentGameMode == Structs.GameMode.Multi3players)
+                if (currentGameMode == Structs.GameMode.Multi3players)
                 {
                     remainingPlayers = 3;
                 }
@@ -109,18 +105,21 @@ public class Director : MonoBehaviour
                 {
                     managerEntity.playersScript[0].OnDie += EndGameConditionChecker;
                     managerEntity.playersScript[0].OnCollision += managerEntity.SummonHole;
+                    managerUI.SetPlayerSprite(0, managerEntity.playersScript[0].sprite.sprite);
                 }
                 if (managerEntity.playersScript[1] != null)
                 {
                     managerEntity.playersScript[1].OnDie += EndGameConditionChecker;
                     managerEntity.playersScript[1].OnCollision += managerEntity.SummonHole;
+                    managerUI.SetPlayerSprite(1, managerEntity.playersScript[1].sprite.sprite);
                 }
-                if(currentGameMode == Structs.GameMode.Multi3players)
+                if (currentGameMode == Structs.GameMode.Multi3players)
                 {
                     if (managerEntity.playersScript[2] != null)
                     {
                         managerEntity.playersScript[2].OnDie += EndGameConditionChecker;
                         managerEntity.playersScript[2].OnCollision += managerEntity.SummonHole;
+                        managerUI.SetPlayerSprite(2, managerEntity.playersScript[2].sprite.sprite);
                     }
                 }
 
@@ -188,7 +187,7 @@ public class Director : MonoBehaviour
 
     public void GameBegin(int players)
     {
-        if(players == 3)
+        if (players == 3)
         {
             currentGameMode = Structs.GameMode.Multi3players;
         }
@@ -207,6 +206,8 @@ public class Director : MonoBehaviour
 
     public void SwitchToScore()
     {
+        // TODO: Asignar el sprite del entity ganador
+        managerUI.panelScore.SetWinner(managerEntity.playersScript[0].sprite.sprite);
         ChangeScene(Structs.GameScene.Score);
     }
 
@@ -223,7 +224,7 @@ public class Director : MonoBehaviour
 
     public void TogglePause()
     {
-        if(isPaused)
+        if (isPaused)
         {
             Unpause();
         }
@@ -252,7 +253,7 @@ public class Director : MonoBehaviour
     private void EndGameConditionChecker()
     {
         remainingPlayers--;
-        if(remainingPlayers <= 1)
+        if (remainingPlayers <= 1)
         {
             SwitchToScore();
         }

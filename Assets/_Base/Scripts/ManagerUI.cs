@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class ManagerUI : MonoBehaviour
 {
@@ -18,8 +20,10 @@ public class ManagerUI : MonoBehaviour
 
     // Panel HUD
     const int maxPlayers = 3;
-    [Header("Ingame HUD"), SerializeField] private UnityEngine.UI.Text[] health= new UnityEngine.UI.Text[maxPlayers];
+    [Header("Ingame HUD"), SerializeField] private UnityEngine.UI.Text[] health = new UnityEngine.UI.Text[maxPlayers];
     private string healthText = "Lifes left: ";
+    [SerializeField] private Image[] playerSprite = new Image[3];
+
 
     void Awake()
     {
@@ -54,7 +58,7 @@ public class ManagerUI : MonoBehaviour
                 panelScore.Hide();
                 panelPause.Hide();
 
-                if(Director.Instance.currentGameMode == Structs.GameMode.Multi3players)
+                if (Director.Instance.currentGameMode == Structs.GameMode.Multi3players)
                 {
                     health[2].transform.parent.gameObject.SetActive(true);
                 }
@@ -92,7 +96,7 @@ public class ManagerUI : MonoBehaviour
     }
     #endregion
 
-    #region Inagem HUD management
+    #region Ingame HUD management
     public void SetHealth(int id, int newHealth)
     {
         if (newHealth < 0)
@@ -104,5 +108,12 @@ public class ManagerUI : MonoBehaviour
             health[id - 1].text = healthText + newHealth.ToString("0");
         }
     }
+    
+    public void SetPlayerSprite(int index, Sprite spr)
+    {
+        playerSprite[index].sprite = spr;
+    }
     #endregion
+
+
 }

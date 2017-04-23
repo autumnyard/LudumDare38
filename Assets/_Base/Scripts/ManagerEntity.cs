@@ -1,31 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class ManagerEntity : MonoBehaviour
 {
-
-    //[SerializeField] private GameObject prefabPlayer1;
-    //private GameObject player1;
-    //[HideInInspector] public EntityPlayer playerScript1;
-
-
-    //[SerializeField] private GameObject prefabPlayer2;
-    //private GameObject player2;
-    //[HideInInspector] public EntityPlayer playerScript2;
-
+    // Players
     const int maxPlayers = 3;
-
-    [SerializeField] private GameObject[] prefabPlayer = new GameObject[maxPlayers];
-    //private List<GameObject> player;
-    //[HideInInspector] public List<EntityPlayer> playerScript;
+    [SerializeField] private GameObject prefabPlayer;
     private GameObject[] players = new GameObject[maxPlayers];
     [HideInInspector] public EntityPlayer[] playersScript = new EntityPlayer[maxPlayers];
 
-
+    // Holes
     [SerializeField] private GameObject prefabHole;
     private List<GameObject> holes;
 
+    // Flags
+    [SerializeField] Sprite[] flags;
 
     void Awake()
     {
@@ -51,28 +40,17 @@ public class ManagerEntity : MonoBehaviour
 
     public void SummonPlayer(int which)
     {
+        // Instantiate
         Vector2 position = Vector2.zero;
-        players[which - 1] = Instantiate(prefabPlayer[which - 1], position, Quaternion.identity, this.transform) as GameObject;
+        players[which - 1] = Instantiate(prefabPlayer, position, Quaternion.identity, this.transform) as GameObject;
         playersScript[which - 1] = players[which - 1].GetComponent<EntityPlayer>();
-        /*
-        
-        switch (which)
-        {
-            default:
-            case 1:
-                players[0] = Instantiate(prefabPlayer1, this.transform) as GameObject;
-                playersScript[0] = player1.GetComponent<EntityPlayer>();
-                //player.Add( Instantiate(prefabPlayer1, this.transform) as GameObject);
-                //playerScript.Add(player1.GetComponent<EntityPlayer>() );
-                break;
-            case 2:
-                //player2 = Instantiate(prefabPlayer2, this.transform) as GameObject;
-                //playerScript2 = player2.GetComponent<EntityPlayer>();
-                players[1] = Instantiate(prefabPlayer1, this.transform) as GameObject;
-                playersScript[1] = player1.GetComponent<EntityPlayer>();
-                break;
-        }
-        */
+
+        // Pick a flag
+        Sprite flag = flags[Random.Range(0, flags.Length)];
+        Debug.Log("Player " + which + " se le asigna la bandera " + flag.name);
+
+        // Settings
+        playersScript[which - 1].Set(which,flag);
     }
 
     private void RemovePlayers()

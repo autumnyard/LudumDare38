@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EntityPlayer : EntityBase
 {
@@ -10,6 +11,8 @@ public class EntityPlayer : EntityBase
     public delegate void OnCollisionDelegate(Vector2 position);
     public OnCollisionDelegate OnCollision;
 
+    public SpriteRenderer sprite;
+
     private float dashTime = 0.5f;
     private float dashAgainTime = 0.5f;
     private float impactForce = 6f;
@@ -17,6 +20,7 @@ public class EntityPlayer : EntityBase
     [SerializeField, Range(4f, 20f)] private float speed = 7f;
     [SerializeField, Range(0.1f, 6f)] private float dash = 4f;
     [SerializeField, Range(1f, 20f)] private float drag = 3f;
+
 
     public void MoveUp()
     {
@@ -109,6 +113,12 @@ public class EntityPlayer : EntityBase
             rigidbody.AddForce(direction.normalized * dash, ForceMode2D.Impulse);
         }
 
+    }
+
+    public void Set(int idNew, Sprite to )
+    {
+        id = idNew;
+        sprite.sprite = to;
     }
 
     void OnTriggerExit2D(Collider2D other)

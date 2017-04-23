@@ -1,6 +1,7 @@
-﻿
+﻿using UnityEngine.UI;
 public class PanelScore : PanelBase
 {
+    public Image winnerSprite;
 
     public void ButtonReplay()
     {
@@ -20,5 +21,10 @@ public class PanelScore : PanelBase
     public void ButtonReturn()
     {
         Director.Instance.GameEnd();
+    }
+
+    public void SetWinner(UnityEngine.Sprite to)
+    {
+        winnerSprite.sprite = to;
     }
 }

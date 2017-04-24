@@ -100,6 +100,7 @@ public class Director : MonoBehaviour
                 Unpause();
                 managerMap.Reset();
                 managerMap.SummonMap();
+                managerEntity.Reset();
                 managerEntity.SummonPlayers();
 
                 if (managerEntity.playersScript[0] != null)
@@ -140,7 +141,6 @@ public class Director : MonoBehaviour
                     managerEntity.playersScript[2].OnDie = null;
                 }
 
-                managerEntity.Reset();
                 managerInput.SetEvents();
                 managerUI.SetPanels();
                 break;
@@ -264,6 +264,14 @@ public class Director : MonoBehaviour
     }
     #endregion
 
+    public void ResetCamera()
+    {
+        if (Camera.main.GetComponent<TweenPosition>() != null)
+        {
+            Camera.main.GetComponent<TweenPosition>().Play();
+        }
+    }
+
 
     #region DEBUG
     private void EndGameConditionChecker()
@@ -271,6 +279,7 @@ public class Director : MonoBehaviour
         remainingPlayers--;
         if (remainingPlayers <= 1)
         {
+            ResetCamera();
             SwitchToScore();
         }
     }

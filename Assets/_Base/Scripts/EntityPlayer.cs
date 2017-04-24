@@ -78,20 +78,20 @@ public class EntityPlayer : EntityBase
         {
             case 2:
                 {
-                    if (Input.GetKey(KeyCode.W) || (Input.GetAxis("JoyY1") < 0))
+                    if (Input.GetKey(KeyCode.W) || (Input.GetAxis("JoyY2") < 0))
                     {
                         direction.y = 1;
                     }
-                    else if (Input.GetKey(KeyCode.S) || (Input.GetAxis("JoyY1") > 0))
+                    else if (Input.GetKey(KeyCode.S) || (Input.GetAxis("JoyY2") > 0))
                     {
                         direction.y = -1;
                     }
 
-                    if (Input.GetKey(KeyCode.A) || (Input.GetAxis("JoyX1") < 0))
+                    if (Input.GetKey(KeyCode.A) || (Input.GetAxis("JoyX2") < 0))
                     {
                         direction.x = -1;
                     }
-                    else if (Input.GetKey(KeyCode.D) || (Input.GetAxis("JoyX1") > 0))
+                    else if (Input.GetKey(KeyCode.D) || (Input.GetAxis("JoyX2") > 0))
                     {
                         direction.x = 1;
                     }
@@ -121,20 +121,20 @@ public class EntityPlayer : EntityBase
                 }
             case 3:
                 {
-                    if (Input.GetKey(KeyCode.U) || (Input.GetAxis("JoyY2") < 0))
+                    if (Input.GetKey(KeyCode.U) || (Input.GetAxis("JoyY1") < 0))
                     {
                         direction.y = 1;
                     }
-                    else if (Input.GetKey(KeyCode.J) || (Input.GetAxis("JoyY2") > 0))
+                    else if (Input.GetKey(KeyCode.J) || (Input.GetAxis("JoyY1") > 0))
                     {
                         direction.y = -1;
                     }
 
-                    if (Input.GetKey(KeyCode.H) || (Input.GetAxis("JoyX2") < 0))
+                    if (Input.GetKey(KeyCode.H) || (Input.GetAxis("JoyX1") < 0))
                     {
                         direction.x = -1;
                     }
-                    else if (Input.GetKey(KeyCode.K) || (Input.GetAxis("JoyX2") > 0))
+                    else if (Input.GetKey(KeyCode.K) || (Input.GetAxis("JoyX1") > 0))
                     {
                         direction.x = 1;
                     }

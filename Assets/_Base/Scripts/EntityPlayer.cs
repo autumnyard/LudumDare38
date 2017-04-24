@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class EntityPlayer : EntityBase
 {
@@ -19,6 +20,8 @@ public class EntityPlayer : EntityBase
     public float impactForce = 6f;
     public float velocityLimit = 6f;
     public float moonBounce = 2f;
+    public float dashAgainScale = 1.3f;
+    public float timeAnimationDashAgain = 0.1f;
 
     [SerializeField, Range(4f, 20f)] private float runSpeed = 4f;
     [SerializeField, Range(0.1f, 10f)] private float dashSpeed = 6f;
@@ -239,15 +242,12 @@ public class EntityPlayer : EntityBase
         {
             ChangeState(States.Normal);
             trail.time = 0.1f;
-            /*
-            Debug.Log(" - Finish dash");
-            GetComponent<GhostSprites>().ClearTrail();
-            GetComponent<GhostSprites>().enabled = false;
-            */
-            //GetComponent<GhostSprites>().TrailSize = 0;
         }
 
         yield return new WaitForSeconds(dashAgainTime);
         canDash = true;
+        transform.GetChild(0).DOScale(new Vector3(transform.localScale.x * dashAgainScale, transform.localScale.y * dashAgainScale, transform.localScale.z), timeAnimationDashAgain)
+                          .SetEase(Ease.InOutCubic)
+                          .SetLoops(2, LoopType.Yoyo);
     }
 }

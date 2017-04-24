@@ -98,8 +98,8 @@ public class ManagerInput : MonoBehaviour
 
                 // Joypad
                 CallDelegate(OnKeyboard[(int)MyKeyboard.W], (Input.GetAxis("JoyY1") < 0));
-                CallDelegate(OnKeyboard[(int)MyKeyboard.A], (Input.GetAxis("JoyY1") > 0));
-                CallDelegate(OnKeyboard[(int)MyKeyboard.S], (Input.GetAxis("JoyX1") < 0));
+                CallDelegate(OnKeyboard[(int)MyKeyboard.S], (Input.GetAxis("JoyY1") > 0));
+                CallDelegate(OnKeyboard[(int)MyKeyboard.A], (Input.GetAxis("JoyX1") < 0));
                 CallDelegate(OnKeyboard[(int)MyKeyboard.D], (Input.GetAxis("JoyX1") > 0));
                 CallDelegate(OnKeyboard[(int)MyKeyboard.ShiftLeft], (Input.GetButtonDown("JoyButton1")));
             }

@@ -73,7 +73,7 @@ public class EntityPlayer : EntityBase
 
         switch (id)
         {
-            case 1:
+            case 2:
                 {
                     if (Input.GetKey(KeyCode.W) || (Input.GetAxis("JoyY1") < 0))
                     {
@@ -95,7 +95,7 @@ public class EntityPlayer : EntityBase
                     break;
                 }
 
-            case 2:
+            case 1:
                 {
                     if (Input.GetKey(KeyCode.UpArrow))
                     {
@@ -153,10 +153,12 @@ public class EntityPlayer : EntityBase
 
     }
 
-    public void Set(int idNew, Sprite to)
+    public void Set(int idNew, Sprite to, int life)
     {
         id = idNew;
         sprite.sprite = to;
+
+        healthMax = life;
     }
 
     void OnTriggerExit2D(Collider2D other)

@@ -12,6 +12,8 @@ public class TweenMove : MonoBehaviour {
     public bool loop = false;
     public LoopType loopType;
 
+    Tweener tween;
+
     // Use this for initialization
     void Start()
     {
@@ -26,8 +28,13 @@ public class TweenMove : MonoBehaviour {
     {
         int loops = (loop) ? -1 : 0;
         Vector2 positionTotal = (Vector2)transform.position + positionShift;
-        transform.DOMove(new Vector3(positionTotal.x, positionTotal.y, transform.position.z), time)
+        tween = transform.DOMove(new Vector3(positionTotal.x, positionTotal.y, transform.position.z), time)
                       .SetEase(ease)
                       .SetLoops(loops, loopType);
+    }
+
+    public void Stop()
+    {
+        tween.Kill();
     }
 }

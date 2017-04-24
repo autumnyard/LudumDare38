@@ -17,7 +17,7 @@ public class ManagerUI : MonoBehaviour
     public PanelScore panelScore;
     //[SerializeField]
     public PanelBase panelPause;
-
+    
     // Panel HUD
     const int maxPlayers = 3;
     [Header("Ingame HUD"), SerializeField] private UnityEngine.UI.Text[] health = new UnityEngine.UI.Text[maxPlayers];

@@ -11,6 +11,7 @@ public class ManagerEntity : MonoBehaviour
     private Vector2 player1StartPosition = new Vector2(-0.7f, 0.7f);
     private Vector2 player2StartPosition = new Vector2(0.7f, 0.7f);
     private Vector2 player3StartPosition = new Vector2(0f, -0.5f);
+    public int lifes = 6;
 
     // Holes
     [SerializeField] private GameObject prefabHole;
@@ -30,7 +31,7 @@ public class ManagerEntity : MonoBehaviour
 
 
     #region Entity Management
-    public void SummonPlayers()
+    public void SummonPlayers( )
     {
         SummonPlayer(1, player1StartPosition);
         SummonPlayer(2, player2StartPosition);
@@ -53,7 +54,7 @@ public class ManagerEntity : MonoBehaviour
         ///Debug.Log("Player " + which + " se le asigna la bandera " + flag.name);
 
         // Settings
-        playersScript[which - 1].Set(which, flag);
+        playersScript[which - 1].Set(which, flag, lifes);
     }
 
     private void RemovePlayers()

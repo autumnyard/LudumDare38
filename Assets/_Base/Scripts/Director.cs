@@ -20,6 +20,7 @@ public class Director : MonoBehaviour
     // Current game thingies
     public bool isPaused;
     private int remainingPlayers = 0;
+    private bool firsTime = true;
     #endregion
 
 
@@ -102,6 +103,7 @@ public class Director : MonoBehaviour
                 managerMap.SummonMap();
                 managerEntity.Reset();
                 managerEntity.SummonPlayers();
+                ResetCamera();
 
                 if (managerEntity.playersScript[0] != null)
                 {
@@ -266,10 +268,11 @@ public class Director : MonoBehaviour
 
     public void ResetCamera()
     {
-        if (Camera.main.GetComponent<TweenPosition>() != null)
+        if (Camera.main.GetComponent<TweenPosition>() != null && !firsTime)
         {
             Camera.main.GetComponent<TweenPosition>().Play();
         }
+        firsTime = false;
     }
 
 
@@ -279,7 +282,6 @@ public class Director : MonoBehaviour
         remainingPlayers--;
         if (remainingPlayers <= 1)
         {
-            ResetCamera();
             SwitchToScore();
         }
     }

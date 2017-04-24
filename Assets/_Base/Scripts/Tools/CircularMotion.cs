@@ -2,18 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CircularMotion : MonoBehaviour {
+public class CircularMotion : MonoBehaviour
+{
 
     [SerializeField] private float speed = 0.3f;
     [SerializeField] private float radius = 5f;
-    private Vector2 center;
+    //private Vector2 center;
+    public Vector2 center = Vector2.zero;
 
     private float _angle;
 
     private void Start()
     {
         // _centre = transform.position;
-        center = Vector2.zero;
+        //center = Vector2.zero;
         //radius = 5f;
         //speed = 0.4f;
     }

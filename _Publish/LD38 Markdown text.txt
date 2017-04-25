@@ -1,0 +1,37 @@
+![LOGO1.png](///raw/e84/3/z/132b.png)
+
+![DefinitiveWarGIF.gif](///raw/e84/3/z/1329.gif)
+
+## DESCRIPTION ##
+
+Try to throw your opponents out in this intensely adrenalitic deathmatch game.
+
+Perfect for a quick match with your friends, and fun for the whole family.
+
+For two or three players.
+
+
+## LINKS ##
+
+- ** Download: ** https://drive.google.com/file/d/0B7cU0oadDLmFeVNpRjh4d3pHeWM
+
+- ** Source code: ** https://github.com/autumnyard/LudumDare38
+
+
+## INPUT ##
+
+** Player 1: ** Arrow keys and Key 0 (be sure numpad key is turned on).
+
+** Player 2: ** WASD and left shift/ctrl. Can also use controller 2.
+
+** Player 3: ** UHJK and right shift/ctrl. Can also use controller 1.
+
+
+
+## TEAM ##
+
+Programming and logo: ** Undi ** (Pablo de la Ossa, http://autumnyard.com)
+
+Additional programming: ** Nicolás ** Gil Soriano
+
+Art: ** Cartorm3 **

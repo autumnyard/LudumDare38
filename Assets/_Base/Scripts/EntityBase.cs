@@ -253,12 +253,11 @@ public class EntityBase : MonoBehaviour
                           .OnComplete(PlayAnimationAppearingHelper);
 
     }
+
     private void PlayAnimationAppearingHelper()
     {
         ChangeState(States.Normal);
-
     }
-
 
     private void PlayAnimationHurting()
     {
